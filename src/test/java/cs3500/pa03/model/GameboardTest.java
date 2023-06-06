@@ -4,6 +4,8 @@ package cs3500.pa03.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import cs3500.pa03.model.enums.ShipType;
+import cs3500.pa03.model.enums.Status;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;

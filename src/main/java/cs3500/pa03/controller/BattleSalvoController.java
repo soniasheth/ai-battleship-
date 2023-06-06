@@ -2,7 +2,7 @@ package cs3500.pa03.controller;
 
 import cs3500.pa03.model.Coord;
 import cs3500.pa03.model.Ship;
-import cs3500.pa03.model.ShipType;
+import cs3500.pa03.model.enums.ShipType;
 import cs3500.pa03.model.ShotHolder;
 import cs3500.pa03.model.player.Player;
 import cs3500.pa03.view.View;

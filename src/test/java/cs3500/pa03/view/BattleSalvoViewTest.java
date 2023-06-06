@@ -6,12 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import cs3500.pa03.model.Cell;
 import cs3500.pa03.model.Coord;
-import cs3500.pa03.model.HitStatus;
+import cs3500.pa03.model.enums.HitStatus;
 import cs3500.pa03.model.Ship;
-import cs3500.pa03.model.ShipType;
+import cs3500.pa03.model.enums.ShipType;
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

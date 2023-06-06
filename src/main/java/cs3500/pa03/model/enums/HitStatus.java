@@ -1,4 +1,4 @@
-package cs3500.pa03.model;
+package cs3500.pa03.model.enums;
 
 /**
  * Represents the 3 types of hit statuses 

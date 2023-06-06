@@ -2,7 +2,7 @@ package cs3500.pa03.view;
 
 import cs3500.pa03.model.Cell;
 import cs3500.pa03.model.Coord;
-import cs3500.pa03.model.HitStatus;
+import cs3500.pa03.model.enums.HitStatus;
 import java.io.IOException;
 import java.util.List;
 
