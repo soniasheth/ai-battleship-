@@ -26,7 +26,6 @@ public class Cell {
   /**
    * Constructs a Cell Object - with a null ship - meaning no ship in that cell
    *
-   * @param location the x y coordinate of the cell
    */
   public Cell() {
     this.hitStatus = false;
