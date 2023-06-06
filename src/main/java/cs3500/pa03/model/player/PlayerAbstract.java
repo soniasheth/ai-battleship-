@@ -107,8 +107,7 @@ public abstract class PlayerAbstract implements Player {
         hitShots.add(coord);
         //tell the ship that it has been hit
         current.getShip().updateHitPositions(coord);
-        //System.out.println(coord.toString());
-        //current.getShip().toString();
+
       }
       //change the cell's hit status to true regardless if there is a ship or not
       current.setHitStatus(true);

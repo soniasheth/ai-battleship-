@@ -33,8 +33,8 @@ public class Ship {
     // returns true if the ship is sunk
     boolean sunk = true;
     for (Map.Entry<Coord, Boolean> element : hitPositionsTracker.entrySet()) {
-      // return false if their is a position not hit yet
-      if (element.getValue() == false) {
+      // return false if there is a position not hit yet
+      if (!element.getValue()) {
         return false;
       }
     }
@@ -71,10 +71,9 @@ public class Ship {
    * @return boolean, whether the given object is the same as this ship
    */
   public boolean equals(Object other) {
-    if (!(other instanceof Ship)) {
+    if (!(other instanceof Ship that)) {
       throw new IllegalArgumentException("Not a Ship");
     }
-    Ship that = (Ship) other;
     return this.hitPositionsTracker.equals(that.hitPositionsTracker)
        && this.type.equals(that.type);
   }

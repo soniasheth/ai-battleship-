@@ -21,8 +21,8 @@ class CellTest {
    */
   @BeforeEach
   public void setUp() {
-    cellEmpty = new Cell(new Coord(0, 0));
-    cellShip = new Cell(new Ship(ShipType.BATTLESHIP), new Coord(0, 1));
+    cellEmpty = new Cell();
+    cellShip = new Cell(new Ship(ShipType.BATTLESHIP));
   }
 
   /**
