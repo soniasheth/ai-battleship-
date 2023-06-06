@@ -36,7 +36,7 @@ public class AiPlayer extends PlayerAbstract {
     for (int i = 0; i < shotNum; i++) {
       boolean goodHit = false;
       //keep generating a shot until a non-hit spot is found
-      while (goodHit == false) {
+      while (!goodHit) {
         //generate a random spot on the board
         int x = random.nextInt(board.getGameBoard().length);
         int y = random.nextInt(board.getGameBoard()[i].length);
@@ -86,54 +86,11 @@ public class AiPlayer extends PlayerAbstract {
   private int getNumShots() {
     int num = 0;
     for (Ship ship : ships) {
-      if (ship.isSunk() == false) {
+      if (!ship.isSunk()) {
         num++;
       }
     }
     return num;
   }
-
-  /*
-  public String toString() {
-    System.out.println("Ai Board (Where ships are places):");
-    for (int i = 0; i < board.getGameBoard().length; i++) {
-      for (int j = 0; j < board.getGameBoard()[0].length; j++) {
-        //there is a ship there and it is not hit
-        if (board.getGameBoard()[i][j].getShip() != null
-        && board.getGameBoard()[i][j].getHitStatus() == true) {
-          System.out.print("H ");
-        }
-        //there is a ship there and it has been hit
-        else if (board.getGameBoard()[i][j].getShip() != null) {
-          System.out.print("X ");
-        }
-        // not ship but it has been hit
-        else if (board.getGameBoard()[i][j].getHitStatus() == true) {
-          System.out.print("M ");
-        }
-        //empty spot
-        else {
-          System.out.print("- ");
-        }
-      }
-      System.out.print("\n");
-    }
-
-    System.out.println("Ai Opponent Board (track AI shots)");
-    for (int i = 0; i < opponentTracker.length; i++) {
-      for (int j = 0; j < opponentTracker[0].length; j++) {
-        if (opponentTracker[i][j].equals(HitStatus.HIT)) {
-          System.out.print("H ");
-        } else if (opponentTracker[i][j].equals(HitStatus.MISS)) {
-          System.out.print("M ");
-        } else {
-          System.out.print("- ");
-        }
-      }
-      System.out.print("\n");
-    }
-    System.out.print("\n");
-    return "";
-  }*/
 
 }

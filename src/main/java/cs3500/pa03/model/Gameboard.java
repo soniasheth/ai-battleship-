@@ -46,7 +46,7 @@ public class Gameboard {
       for (int j = 0; j < width; j++) {
         if (board[i][j] == null) {
           //initlize a cell without a ship
-          board[i][j] = new Cell(new Coord(j, i));
+          board[i][j] = new Cell();
         }
       }
     }
@@ -93,7 +93,7 @@ public class Gameboard {
             for (int k = beginCol; k <= endCol; k++) {
               Coord position = new Coord(k, j);
               //gives the cell a ship and its position
-              board[j][k] = new Cell(ship, position);
+              board[j][k] = new Cell(ship);
               //add the coordinate to the ship's coord hashmap
               ship.addHitPositionsTracker(position);
             }

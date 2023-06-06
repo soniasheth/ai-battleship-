@@ -12,9 +12,9 @@ import java.io.PrintStream;
 import java.util.Random;
 
 /**
- * Begins the game of Battleship
+ * Begins the game of ManualBattleship
  */
-public class Battleship {
+public class ManualBattleship {
 
   /**
    * Runs the game

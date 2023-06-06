@@ -9,7 +9,7 @@ public enum ShipType {
   DESTROYER(4),
   SUBMARINE(3);
 
-  int size;
+  final int size;
 
   private ShipType(int size) {
     this.size = size;

@@ -18,8 +18,8 @@ import java.util.Random;
 public class ManualPlayer extends PlayerAbstract {
 
   //fields
-  private ShotHolder shotHolder;
-  private View view;
+  private final ShotHolder shotHolder;
+  private final View view;
 
   /**
    * Constructor

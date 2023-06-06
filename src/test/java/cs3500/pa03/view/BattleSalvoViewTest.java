@@ -108,12 +108,12 @@ class BattleSalvoViewTest {
   public void testDisplayBoard() {
     //smaller input
     Cell[][] board = new Cell[2][2];
-    board[0][0] = new Cell(new Ship(ShipType.SUBMARINE), new Coord(0, 0));
-    board[0][1] = new Cell(new Ship(ShipType.SUBMARINE), new Coord(1, 0));
+    board[0][0] = new Cell(new Ship(ShipType.SUBMARINE));
+    board[0][1] = new Cell(new Ship(ShipType.SUBMARINE));
     board[0][1].setHitStatus(true);
-    board[1][0] = new Cell(new Coord(0, 1));
+    board[1][0] = new Cell();
     board[1][0].setHitStatus(true);
-    board[1][1] = new Cell(new Coord(1, 1));
+    board[1][1] = new Cell();
 
     String boardDisp =
             """

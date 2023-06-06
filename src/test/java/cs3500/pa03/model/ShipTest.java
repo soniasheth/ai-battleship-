@@ -2,6 +2,7 @@ package cs3500.pa03.model;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import cs3500.pa03.model.enums.ShipType;
@@ -106,7 +107,7 @@ class ShipTest {
     ship1.addHitPositionsTracker(new Coord(0, 0));
     ship.addHitPositionsTracker(new Coord(1, 0));
 
-    assertEquals(false, ship.equals(ship1));
+    assertFalse(ship.equals(ship1));
   }
 
   /**
@@ -116,7 +117,7 @@ class ShipTest {
   public void testEqualsExeption() {
     assertThrows(
         IllegalArgumentException.class,
-        () -> ship.equals(new Cell(new Coord(1, 1))));
+        () -> ship.equals(new Cell()));
   }
 
 }
