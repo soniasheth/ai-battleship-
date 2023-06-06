@@ -1,5 +1,6 @@
 package cs3500.pa03.model;
 
+import cs3500.pa03.model.enums.ShipType;
 import java.util.HashMap;
 import java.util.Map;
 

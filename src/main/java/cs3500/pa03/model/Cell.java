@@ -1,6 +1,8 @@
 package cs3500.pa03.model;
 
 
+import cs3500.pa03.model.enums.Status;
+
 /**
  * Represents a singular cell on the Gameboard
  */

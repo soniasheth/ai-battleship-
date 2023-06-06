@@ -4,14 +4,12 @@ package cs3500.pa03.model.player;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import cs3500.pa03.model.Coord;
-import cs3500.pa03.model.GameResult;
-import cs3500.pa03.model.Ship;
-import cs3500.pa03.model.ShipType;
+import cs3500.pa03.model.enums.GameResult;
+import cs3500.pa03.model.enums.ShipType;
 import cs3500.pa03.model.ShotHolder;
 import cs3500.pa03.view.BattleSalvoView;
 import cs3500.pa03.view.View;
 import java.io.StringReader;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
