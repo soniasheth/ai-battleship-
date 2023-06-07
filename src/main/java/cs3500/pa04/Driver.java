@@ -1,7 +1,6 @@
 package cs3500.pa04;
 
 import cs3500.pa03.controller.ManualBattleship;
-import cs3500.pa03.controller.ProxyDealer;
 import cs3500.pa03.model.player.AiPlayer;
 import java.io.IOException;
 import java.net.Socket;
