@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.net.Socket;
 
+//NOTE I MOVED ALL THIS TO PROXYCONTROLLER
 
 
 public class ProxyDealer {

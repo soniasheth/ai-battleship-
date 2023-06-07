@@ -44,7 +44,7 @@ public class Driver {
   private static void runClient(String host, int port)
       throws IOException, IllegalStateException {
     Socket server = new Socket(host, port);
-    ProxyDealer proxyDealer = new ProxyDealer(server, new AiPlayer("AI", new Random()));
-    proxyDealer.run();
+    ProxyController controller = new ProxyController(server, new AiPlayer("AI", new Random()));
+    controller.run();
   }
 }
