@@ -38,14 +38,14 @@ public class AiPlayer extends PlayerAbstract {
       //keep generating a shot until a non-hit spot is found
       while (!goodHit) {
         //generate a random spot on the board
-        int x = random.nextInt(board.getGameBoard().length);
-        int y = random.nextInt(board.getGameBoard()[i].length);
+        int x = random.nextInt(board.getGameBoard().length); //row
+        int y = random.nextInt(board.getGameBoard()[i].length); //column
         //the ai has not hit the spot yet
-        if (opponentTracker[y][x].equals(HitStatus.NONE)) {
+        if (opponentTracker[x][y].equals(HitStatus.NONE)) {
           //update all the metadata with the hit shot
           goodHit = true;
-          shots.add(new Coord(x, y));
-          opponentTracker[y][x] = HitStatus.MISS;
+          shots.add(new Coord(y, x));
+          opponentTracker[x][y] = HitStatus.MISS;
         }
       }
     }

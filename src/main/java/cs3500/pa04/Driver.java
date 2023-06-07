@@ -17,7 +17,6 @@ public class Driver {
    * @param args - no command line args required
    */
   public static void main(String[] args) {
-
     /*
     example:
         String host = "0.0.0.0";
