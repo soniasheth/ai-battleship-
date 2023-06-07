@@ -300,7 +300,7 @@ public class BattleSalvoView implements View {
       if (num < 0) {
         try {
           this.append.append(errormessage);
-        } catch (IOException e2) {
+        } catch (IOException e) {
           throw new IllegalArgumentException("not appendable");
         }
         return getNums(errormessage, amount);

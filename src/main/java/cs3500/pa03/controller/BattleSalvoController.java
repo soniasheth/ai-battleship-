@@ -87,9 +87,9 @@ public class BattleSalvoController implements Controller {
     if (player1Shots.isEmpty() && player2Shots.isEmpty()) {
       view.displayAnything("GAME OVER. Draw.");
     } else if (player1Shots.isEmpty()) {
-      view.displayAnything("GAME OVER. Computer won!");
+      view.displayAnything("GAME OVER. " + player2.name() + " won!");
     } else {
-      view.displayAnything("GAME OVER. You won!");
+      view.displayAnything("GAME OVER. " + player1.name() + " won!");
     }
   }
 
