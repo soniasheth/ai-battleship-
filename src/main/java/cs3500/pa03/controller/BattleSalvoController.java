@@ -64,15 +64,14 @@ public class BattleSalvoController implements Controller {
             + " [Carrier, Battleship, Destroyer, Submarine] \n"
         + "Remember, your fleet may not exceed size " + maxNumShips);
     while (!checkFleet(fleet, maxNumShips)) {
-      fleet = view.getFleet("Invalid fleet. Try again: ");
+      fleet = view.getFleet("Uh oh! Invalid fleet. Try again: ");
     }
     Map<ShipType, Integer> finalFleet = processFleet(fleet);
 
-    //init the game
-    List<Ship> player1Ships = player1.setup(height, width, finalFleet); //need to know how many
+    // init the game
+    // also displays the player's ships at the beginning of the game
+    List<Ship> player1Ships = player1.setup(height, width, finalFleet);
     List<Ship> player2Ships = player2.setup(height, width, finalFleet);
-    //System.out.println("Size: "+ player1Ships.size());
-    //System.out.println("Size: "+ player2Ships.size());
 
     //init the shot arraylist for the loop and give them one shot to begin with in order to kick
     //game off - those coordinates will be over written
@@ -83,12 +82,9 @@ public class BattleSalvoController implements Controller {
 
     //game loop
     while (getShotNum(player1Ships) != 0 && getShotNum(player2Ships) != 0) {
-      //System.out.println("here!");
-      //player2.toString();
       // get the shots and keep looping until they are valid
       List<Coord> shots;
       do {
-        //System.out.println("Shots: "+ getShotNum(player1Ships));
         shots = view.getShots(getShotNum(player1Ships));
       } while (!validateShots(shots, height, width)); //process the shots
       shotHolder.setShots(shots);
@@ -142,7 +138,7 @@ public class BattleSalvoController implements Controller {
     boolean valid = true;
     //run through each coordinate
     for (Coord coord : shots) {
-      if (coord.getX() >= height || coord.getY() >= width || coord.getX() < 0 || coord.getY() < 0) {
+      if (coord.getY() >= height || coord.getX() >= width || coord.getX() < 0 || coord.getY() < 0) {
         valid = false;
       }
     }

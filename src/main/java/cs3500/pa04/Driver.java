@@ -12,7 +12,7 @@ public class Driver {
    *
    * @param args - no command line args required
    */
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) {
     Battleship battle = new Battleship();
     battle.run();
   }
