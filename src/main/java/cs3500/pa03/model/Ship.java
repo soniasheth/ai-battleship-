@@ -1,6 +1,7 @@
 package cs3500.pa03.model;
 
 import cs3500.pa03.model.enums.ShipType;
+import cs3500.pa04.Direction;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ public class Ship {
   //fields
   private ShipType type;
   private HashMap<Coord, Boolean> hitPositionsTracker;
+  private Direction direction;
 
   /**
    * Constructor - Initializes a Ship object
@@ -19,6 +21,12 @@ public class Ship {
    */
   public Ship(ShipType type) {
     this.type = type;
+    this.hitPositionsTracker = new HashMap<>();
+  }
+
+  public Ship(ShipType type, Direction dir) {
+    this.type = type;
+    this.direction = dir;
     this.hitPositionsTracker = new HashMap<>();
   }
 
@@ -80,6 +88,10 @@ public class Ship {
 
   public HashMap<Coord, Boolean> getHitPositionsTracker() {
     return this.hitPositionsTracker;
+  }
+
+  public Direction getDirection() {
+    return this.direction;
   }
 
   /*

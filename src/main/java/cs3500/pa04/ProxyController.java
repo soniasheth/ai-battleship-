@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import cs3500.pa03.model.Ship;
 import cs3500.pa03.model.enums.ShipType;
 import cs3500.pa03.model.player.AiPlayer;
+import cs3500.pa04.Json.FleetJson;
 import cs3500.pa04.Json.FleetSpecJson;
 import cs3500.pa04.Json.JoinJson;
 import cs3500.pa04.Json.JsonUtils;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
@@ -96,7 +98,7 @@ public class ProxyController {
     //create the response to send back to server
     MessageJson clientResponse = new MessageJson("join", jsonResponse);
 
-    //sends back to the server??? i think
+    //sends back to the server
     this.out.println(clientResponse);
   }
 
@@ -112,7 +114,7 @@ public class ProxyController {
     int height = setUpArgs.height();
     int width = setUpArgs.width();
 
-    //get the fleet from the server's message
+    //parse the fleet from the server's message
     FleetSpecJson fleetSpec = setUpArgs.fleetSpec();
     Map<ShipType, Integer> specification = new HashMap<>();
     specification.put(ShipType.CARRIER, fleetSpec.numCarrier());
@@ -120,10 +122,28 @@ public class ProxyController {
     specification.put(ShipType.DESTROYER, fleetSpec.numDestroyer());
     specification.put(ShipType.SUBMARINE, fleetSpec.numSubmarine());
 
+    //have the player generate the fleet (and board)
     List<Ship> aiShips = player.setup(height, width,specification);
-    //SOMEHOW CONVERT THE SHIP TO THE SHIPADAPTER !!!!!!!!!!
 
+    //convert to ShipAdapter for JSON
+    List<ShipAdapter> aiShipsFinal = new ArrayList<>();
+    for (Ship ship : aiShips) {
+      aiShipsFinal.add(new ShipAdapter(ship));
+    }
+
+    //create the json response
+    FleetJson setUpFleet = new FleetJson(aiShipsFinal);
+    JsonNode jsonResponse = JsonUtils.serializeRecord(setUpFleet);
+
+    //send message back to the server
+    MessageJson clientResponse = new MessageJson("setup", jsonResponse);
+    this.out.println(clientResponse);
   }
+
+
+//  private void makeAiFleet(FleetSpecJson fleetSpec) {
+//
+//  }
 
   private void handleTakeShots(JsonNode arguments) {
 

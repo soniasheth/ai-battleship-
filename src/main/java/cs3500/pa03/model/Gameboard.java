@@ -1,6 +1,7 @@
 package cs3500.pa03.model;
 
 import cs3500.pa03.model.enums.ShipType;
+import cs3500.pa04.Direction;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
@@ -59,9 +60,8 @@ public class Gameboard {
    * @param number quanity of the specific type of ship
    */
   private void placeShip(ShipType type, int number) {
-    // how long the ship can be
     int shipLength = type.getSize();
-    //Random random = new Random(67);
+    Direction dir;
     //place 'number' amount of ships
     for (int i = 0; i < number; i++) {
       boolean placed = false;
@@ -78,17 +78,19 @@ public class Gameboard {
           beginCol = random.nextInt(width);
           endRow = beginRow + shipLength - 1;
           endCol = beginCol;
+          dir = Direction.VERTICAL;
         } else {
           //horizontal placement
           beginRow = random.nextInt(height);
           beginCol = random.nextInt(width - shipLength + 1);
           endRow = beginRow;
           endCol = beginCol + shipLength - 1;
+          dir = Direction.HORIZONTAL;
         }
         //check is valid and if so, place the ship
         if (checkValidLocation(beginRow, endRow, endCol, beginCol)) {
           //creates a new ship
-          Ship ship = new Ship(type);
+          Ship ship = new Ship(type, dir);
           for (int j = beginRow; j <= endRow; j++) {
             for (int k = beginCol; k <= endCol; k++) {
               Coord position = new Coord(k, j);
