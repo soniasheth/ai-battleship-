@@ -3,8 +3,10 @@ package cs3500.pa03.view;
 import cs3500.pa03.model.Cell;
 import cs3500.pa03.model.Coord;
 import cs3500.pa03.model.enums.HitStatus;
+import cs3500.pa03.model.enums.ShipType;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Interface for the view
@@ -19,24 +21,16 @@ public interface View {
    */
   void displayAnything(String prompt) throws IOException;
 
-  /**
-   * Gets the user's input for board dimensions
-   *
-   * @param prompt Message to display to the user
-   * @return String Array with the user's inputted board dimensions
-   * @throws IOException if unable to append
-   */
-  String[] getBoardDimension(String prompt) throws IOException;
+  List<Integer> welcome();
 
   /**
    * Gets user's input for the fleet
    *
-   * @param prompt Message to display to console
+   * @param size max fleet size
    *
    * @return String array with the fleet numbers
-   * @throws IOException if unable to append
    */
-  String[] getFleet(String prompt) throws IOException;
+  Map<ShipType, Integer> getFleet(int size);
 
   /**
    * Dispays the player's board to the console
@@ -59,7 +53,7 @@ public interface View {
    * @return List of coordinates (shots)
    * @throws IOException if unable to append with the appendable
    */
-  List<Coord> getShots(int numShots) throws IOException;
+  List<Coord> getShots(int numShots, int widthMax, int heightMax) throws IOException;
 
 
 }
