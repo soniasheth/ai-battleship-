@@ -12,7 +12,7 @@ import java.io.PrintStream;
 import java.util.Random;
 
 /**
- * Begins the game of ManualBattleship
+ * Begins the game of ManualBattleship - player vs. AI!
  */
 public class ManualBattleship {
 

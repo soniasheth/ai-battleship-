@@ -1,6 +1,9 @@
 package cs3500.pa03.model;
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Represents an (x,y) Coordinate
  */
@@ -15,7 +18,10 @@ public class Coord {
    * @param x x location
    * @param y y location
    */
-  public Coord(int x, int y) {
+
+  @JsonCreator
+  public Coord(
+      @JsonProperty("x") int x, @JsonProperty("y") int y) {
     this.coordX = x;
     this.coordY = y;
   }
