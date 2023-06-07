@@ -3,15 +3,19 @@ package cs3500.pa04;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import cs3500.pa03.model.Coord;
 import cs3500.pa03.model.Ship;
 import cs3500.pa03.model.enums.ShipType;
 import cs3500.pa03.model.player.AiPlayer;
+import cs3500.pa04.Json.EndGameJson;
 import cs3500.pa04.Json.FleetJson;
 import cs3500.pa04.Json.FleetSpecJson;
 import cs3500.pa04.Json.JoinJson;
 import cs3500.pa04.Json.JsonUtils;
 import cs3500.pa04.Json.MessageJson;
 import cs3500.pa04.Json.SetUpJson;
+import cs3500.pa04.Json.VolleyJson;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -73,11 +77,13 @@ public class ProxyController {
     } else if ("setup".equals(name)) {
       handleSetUp(arguments);
     } else if ("take-shots".equals(name)) {
-      handleTakeShots(arguments);
+      handleTakeShots();
     } else if ("report-damage".equals(name)) {
       handleReportDamage(arguments);
     } else if ("successful-hits".equals(name)) {
-      handleSuccHits(arguments);
+      handleSuccessfulHits(arguments);
+    } else if ("end-game".equals(name)) {
+      handleEndGame(arguments);
     } else {
       throw new IllegalStateException("Invalid message name");
     }
@@ -141,25 +147,67 @@ public class ProxyController {
   }
 
 
-//  private void makeAiFleet(FleetSpecJson fleetSpec) {
-//
-//  }
+  private void handleTakeShots() {
+    //player takes the shots
+    List<Coord> shots = player.takeShots();
 
-  private void handleTakeShots(JsonNode arguments) {
+    //create the json response
+    VolleyJson aiShots = new VolleyJson(shots);
+    JsonNode jsonResponse = JsonUtils.serializeRecord(aiShots);
 
+    //send message back to the server
+    MessageJson clientResponse = new MessageJson("setup", jsonResponse);
+    this.out.println(clientResponse);
   }
+
+  /**
+   *
+   * @param arguments args
+   */
 
   private void handleReportDamage(JsonNode arguments) {
+    //shots received from the server
+    VolleyJson shotsReceived = this.mapper.convertValue(arguments, VolleyJson.class);
+    List<Coord> shots = shotsReceived.getVolley();
 
+    //called report damage on player + get the damage done
+    List<Coord> damage = player.reportDamage(shots);
+
+    //create the json response
+    VolleyJson reportDamage = new VolleyJson(damage);
+    JsonNode jsonResponse = JsonUtils.serializeRecord(reportDamage);
+
+    //send message back to the server
+    MessageJson clientResponse = new MessageJson("report-damage", jsonResponse);
+    this.out.println(clientResponse);
   }
 
-  private void handleSuccHits(JsonNode arguments) {
+  private void handleSuccessfulHits(JsonNode arguments) {
+    VolleyJson shotsReceived = this.mapper.convertValue(arguments, VolleyJson.class);
+    List<Coord> shots = shotsReceived.getVolley();
+    player.successfulHits(shots);
 
+    //send message back to the server
+    JsonNode emptyContent = JsonNodeFactory.instance.objectNode();
+    MessageJson clientResponse = new MessageJson("successful-hits", emptyContent);
+    this.out.println(clientResponse);
   }
 
+  /**
+   *
+   * @param arguments args
+   */
+  private void handleEndGame(JsonNode arguments) {
+    EndGameJson endGameMessage = this.mapper.convertValue(arguments, EndGameJson.class);
 
+    //call endgame on player
+    player.endGame(endGameMessage.getResult(), endGameMessage.getReason());
 
-
+    //send message back to the server
+    JsonNode emptyContent = JsonNodeFactory.instance.objectNode();
+    MessageJson clientResponse = new MessageJson("end-game", emptyContent);
+    this.out.println(clientResponse);
+  }
 
 
 
