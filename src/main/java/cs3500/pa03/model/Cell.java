@@ -9,19 +9,16 @@ import cs3500.pa03.model.enums.Status;
 public class Cell {
   // a cell is either hit or it is not (true / false)
   private boolean hitStatus;
-  private Ship ship;
-  private Coord location;
-  private Status shipStatus; //if it has a ship or not
+  private final Ship ship;
+  private final Status shipStatus; //if it has a ship or not
 
   /**
    * Constructs a Cell Object - with a shi[
    *
    * @param ship the ship present in this cell
-   * @param location the x y coordinate of the cell
    */
-  public Cell(Ship ship, Coord location) {
+  public Cell(Ship ship) {
     this.hitStatus = false;
-    this.location = location;
     this.ship = ship;
     this.shipStatus = Status.SHIP;
   }
@@ -29,11 +26,9 @@ public class Cell {
   /**
    * Constructs a Cell Object - with a null ship - meaning no ship in that cell
    *
-   * @param location the x y coordinate of the cell
    */
-  public Cell(Coord location) {
+  public Cell() {
     this.hitStatus = false;
-    this.location = location;
     this.ship = null;
     this.shipStatus = Status.EMPTY;
   }

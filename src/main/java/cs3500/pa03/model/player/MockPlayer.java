@@ -5,6 +5,7 @@ import cs3500.pa03.model.enums.GameResult;
 import cs3500.pa03.model.Ship;
 import cs3500.pa03.model.enums.ShipType;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -49,8 +50,7 @@ public class MockPlayer implements Player {
     build.append("setup ");
     Ship ship = new Ship(ShipType.SUBMARINE);
     ship.addHitPositionsTracker(new Coord(0, 0));
-    //ship.addHitPositionsTracker(new Coord(0, 1));
-    //ship.addHitPositionsTracker(new Coord(0, 2));
+
     List<Ship> playShips = new ArrayList<>();
     playShips.add(ship);
     this.ships = playShips;
@@ -65,12 +65,9 @@ public class MockPlayer implements Player {
   @Override
   public List<Coord> takeShots() {
     build.append("takeshots ");
-    List<Coord> listValid = new ArrayList<>();
-    listValid.add(new Coord(0, 0));
-    listValid.add(new Coord(1, 1));
-    listValid.add(new Coord(2, 2));
-    listValid.add(new Coord(3, 3));
-    if (calledShots == false) {
+    List<Coord> listValid = new ArrayList<>(
+        Arrays.asList(new Coord(0, 0),new Coord(1, 1),new Coord(2, 2),new Coord(3, 3) ));
+    if (!calledShots) {
       calledShots = true;
       return listValid;
     } else {
@@ -98,11 +95,11 @@ public class MockPlayer implements Player {
   @Override
   public void successfulHits(List<Coord> shotsThatHitOpponentShips) {
     build.append("hits ");
-    if (calledShots == true && calledSuccHits == true) {
+    if (calledShots && calledSuccHits) {
       ships.remove(0);
     }
     calledSuccHits = true;
-    //ships.get(0).updateHitPositions(new Coord(0, 0));
+
 
   }
 

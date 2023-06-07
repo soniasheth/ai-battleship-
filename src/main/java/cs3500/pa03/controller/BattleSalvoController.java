@@ -57,11 +57,11 @@ public class BattleSalvoController implements Controller {
     }
     int height = Integer.parseInt(dimensions[0]);
     int width =  Integer.parseInt(dimensions[1]);
-    int maxNumShips = getMin(height, width);
+    int maxNumShips = Math.min(height, width);
 
     //get the fleet
     String[] fleet = view.getFleet("Please enter your fleet in the order"
-            + " [Carrier, Battleship, Destroyer, Submarine] \n"
+            + " [Carrier, ManualBattleship, Destroyer, Submarine] \n"
         + "Remember, your fleet may not exceed size " + maxNumShips);
     while (!checkFleet(fleet, maxNumShips)) {
       fleet = view.getFleet("Uh oh! Invalid fleet. Try again: ");
@@ -118,7 +118,7 @@ public class BattleSalvoController implements Controller {
   private int getShotNum(List<Ship> ships) {
     int num = 0;
     for (Ship ship : ships) {
-      if (ship.isSunk() == false) {
+      if (!ship.isSunk()) {
         num++;
       }
     }
@@ -140,25 +140,12 @@ public class BattleSalvoController implements Controller {
     for (Coord coord : shots) {
       if (coord.getY() >= height || coord.getX() >= width || coord.getX() < 0 || coord.getY() < 0) {
         valid = false;
+        break;
       }
     }
     return valid;
   }
 
-  /**
-   * Given two numbers, returns the smaller of the two
-   *
-   * @param num1 int
-   * @param num2 int
-   * @return int, the smaller number between the given numbers
-   */
-  private int getMin(int num1, int num2) {
-    if (num1 <= num2) {
-      return num1;
-    } else {
-      return num2;
-    }
-  }
 
   /**
    * Validates the user given board dimensions
@@ -176,7 +163,7 @@ public class BattleSalvoController implements Controller {
     } catch (NumberFormatException e) {
       return false;
     }
-    return (height >= 6 && height <= 15 && width >= 6 && height <= 15);
+    return (height >= 6 && height <= 15 && width >= 6 && width <= 15);
   }
 
   /**
