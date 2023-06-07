@@ -65,7 +65,7 @@ public class Gameboard {
     //place 'number' amount of ships
     for (int i = 0; i < number; i++) {
       boolean placed = false;
-      while (placed == false) {
+      while (!placed) {
         // vertical or horizontal
         boolean isVertical = random.nextBoolean();
         int beginRow;
@@ -123,6 +123,7 @@ public class Gameboard {
         //if the spot has already been initialized, it is an invlaid location
         if (board[i][j] != null) {
           valid = false;
+          break;
         }
       }
     }

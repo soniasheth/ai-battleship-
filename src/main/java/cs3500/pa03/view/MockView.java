@@ -3,9 +3,12 @@ package cs3500.pa03.view;
 import cs3500.pa03.model.Cell;
 import cs3500.pa03.model.Coord;
 import cs3500.pa03.model.enums.HitStatus;
+import cs3500.pa03.model.enums.ShipType;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * MockView
@@ -35,64 +38,16 @@ public class MockView implements View {
   }
 
   @Override
-  public String[] getBoardDimension(String prompt) throws IOException {
-    build.append("boardDim ");
-    String[] testValid = new String[2];
-    testValid[0] = "6";
-    testValid[1] = "6";
-
-    String[] testInValid1 = new String[2];
-    testInValid1[0] = "30";
-    testInValid1[1] = "20";
-
-    String[] testInValid2 = new String[2];
-    testInValid2[0] = "30";
-    testInValid2[1] = "r";
-
-    if (numTimesCalledDim == 0) {
-      numTimesCalledDim++;
-      return testInValid1;
-    } else if (numTimesCalledDim == 1) {
-      numTimesCalledDim++;
-      return testInValid2;
-    } else {
-      numTimesCalledDim++;
-      return testValid;
-    }
+  public List<Integer> welcome() {
+    build.append("welcome ");
+    return new ArrayList<>(Arrays.asList(6, 6));
   }
 
   @Override
-  public String[] getFleet(String prompt) throws IOException {
-    build.append("getFleet ");
-    String[] testValid = new String[4];
-    testValid[0] = "1";
-    testValid[1] = "1";
-    testValid[2] = "1";
-    testValid[3] = "1";
-
-    String[] testInValid1 = new String[4];
-    testInValid1[0] = "10";
-    testInValid1[1] = "10";
-    testInValid1[2] = "20";
-    testInValid1[3] = "10";
-
-    String[] testInValid2 = new String[4];
-    testInValid1[0] = "10";
-    testInValid1[1] = "a";
-    testInValid1[2] = "20";
-    testInValid1[3] = "10";
-
-    if (numTimesCalledFleet == 0) {
-      numTimesCalledFleet++;
-      return testInValid1;
-    } else if (numTimesCalledFleet == 1) {
-      numTimesCalledFleet++;
-      return testInValid2;
-    } else {
-      numTimesCalledFleet++;
-      return testValid;
-    }
+  public Map<ShipType, Integer> getFleet(int size) {
+    return null;
   }
+
 
   @Override
   public void displayBoard(Cell[][] board) throws IOException {
@@ -105,36 +60,9 @@ public class MockView implements View {
   }
 
   @Override
-  public List<Coord> getShots(int numShots) throws IOException {
-    build.append("getShots ");
-    List<Coord> listValid = new ArrayList<>();
-    listValid.add(new Coord(0, 0));
-    listValid.add(new Coord(1, 1));
-    listValid.add(new Coord(2, 2));
-    listValid.add(new Coord(3, 3));
-
-    List<Coord> listInValid1 = new ArrayList<>();
-    listInValid1.add(new Coord(0, 0));
-    listInValid1.add(new Coord(30, 1));
-    listInValid1.add(new Coord(2, 2));
-    listInValid1.add(new Coord(3, 3));
-
-    List<Coord> listInValid2 = new ArrayList<>();
-    listInValid1.add(new Coord(0, 30));
-    listInValid2.add(new Coord(30, 1));
-    listInValid2.add(new Coord(2, -1));
-    listInValid2.add(new Coord(3, -2));
-
-    if (numTimesCalledShots == 0) {
-      numTimesCalledShots++;
-      return listInValid1;
-    } else if (numTimesCalledShots == 1) {
-      numTimesCalledShots++;
-      return listInValid1;
-    } else {
-      numTimesCalledShots++;
-      return listValid;
-    }
+  public List<Coord> getShots(int numShots, int widthMax, int heightMax) throws IOException {
+    return null;
   }
+
 
 }

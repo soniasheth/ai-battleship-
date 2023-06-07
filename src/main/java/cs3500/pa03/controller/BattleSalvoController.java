@@ -44,34 +44,20 @@ public class BattleSalvoController implements Controller {
    * @throws IOException if unable to append
    */
   public void run() throws IOException {
-    //introduce user
-    view.displayAnything("Hello! Welcome to BattleSalvo! Let's play!");
 
     //get board dimensions
-    String[] dimensions = view.getBoardDimension(
-        "Please enter a valid height and width below [between 6 and 15 inclusive]:");
-    while (!checkDimensions(dimensions)) {
-      dimensions = view.getBoardDimension(
-          "Invalid board size inputs. Please"
-              + " remember to enter a number between 6 and 15 inclusive. Try again: ");
-    }
-    int height = Integer.parseInt(dimensions[0]);
-    int width =  Integer.parseInt(dimensions[1]);
+    List<Integer> dimensions = view.welcome();
+    int height = dimensions.get(0);
+    int width =  dimensions.get(1);
     int maxNumShips = Math.min(height, width);
 
     //get the fleet
-    String[] fleet = view.getFleet("Please enter your fleet in the order"
-            + " [Carrier, ManualBattleship, Destroyer, Submarine] \n"
-        + "Remember, your fleet may not exceed size " + maxNumShips);
-    while (!checkFleet(fleet, maxNumShips)) {
-      fleet = view.getFleet("Uh oh! Invalid fleet. Try again: ");
-    }
-    Map<ShipType, Integer> finalFleet = processFleet(fleet);
+    Map<ShipType, Integer>  fleet = view.getFleet(maxNumShips);
 
     // init the game
     // also displays the player's ships at the beginning of the game
-    List<Ship> player1Ships = player1.setup(height, width, finalFleet);
-    List<Ship> player2Ships = player2.setup(height, width, finalFleet);
+    List<Ship> player1Ships = player1.setup(height, width, fleet);
+    List<Ship> player2Ships = player2.setup(height, width, fleet);
 
     //init the shot arraylist for the loop and give them one shot to begin with in order to kick
     //game off - those coordinates will be over written
@@ -83,10 +69,8 @@ public class BattleSalvoController implements Controller {
     //game loop
     while (getShotNum(player1Ships) != 0 && getShotNum(player2Ships) != 0) {
       // get the shots and keep looping until they are valid
-      List<Coord> shots;
-      do {
-        shots = view.getShots(getShotNum(player1Ships));
-      } while (!validateShots(shots, height, width)); //process the shots
+      List<Coord>  shots = view.getShots(getShotNum(player1Ships), width, height);
+
       shotHolder.setShots(shots);
       //each player takes shots
       player1Shots = player1.takeShots();
@@ -124,87 +108,6 @@ public class BattleSalvoController implements Controller {
     }
     return num;
   }
-
-  /**
-   * Valids the user input for shots
-   *
-   * @param shots unfiltered user's input of shots
-   * @param height rows on the board
-   * @param width columns on the board
-   *
-   * @return boolean, whether the user inputted valid shots
-   */
-  private boolean validateShots(List<Coord> shots, int height, int width) {
-    boolean valid = true;
-    //run through each coordinate
-    for (Coord coord : shots) {
-      if (coord.getY() >= height || coord.getX() >= width || coord.getX() < 0 || coord.getY() < 0) {
-        valid = false;
-        break;
-      }
-    }
-    return valid;
-  }
-
-
-  /**
-   * Validates the user given board dimensions
-   *
-   * @param dimensions String Array of user input, size 2
-   * @return whether the given dimensions foe the board are valid
-   */
-  private boolean checkDimensions(String [] dimensions) {
-    int height;
-    int width;
-    //ensure numbers
-    try {
-      height = Integer.parseInt(dimensions[0]);
-      width = Integer.parseInt(dimensions[1]);
-    } catch (NumberFormatException e) {
-      return false;
-    }
-    return (height >= 6 && height <= 15 && width >= 6 && width <= 15);
-  }
-
-  /**
-   * Validates the user given fleet
-   *
-   * @param fleet String array of user inputed fleet, size 4
-   * @param max maxinum number of ships there can be
-   * @return boolean, whether the given fleet numbers are valid
-   */
-  private boolean checkFleet(String[] fleet, int max) {
-    int carrier;
-    int battle;
-    int dest;
-    int sub;
-    //ensure that they are numbers
-    try {
-      carrier = Integer.parseInt(fleet[0]);
-      battle = Integer.parseInt(fleet[1]);
-      dest = Integer.parseInt(fleet[2]);
-      sub = Integer.parseInt(fleet[3]);
-    } catch (NumberFormatException e) {
-      return false;
-    }
-    return (carrier + battle + dest + sub <= max);
-  }
-
-  /**
-   * Processes the fleet into a HashMap of ship type & the number of ships per ship type
-   *
-   * @param fleet String Array of fleet numbers
-   * @return HashMap of shipe types to number of each ship type
-   */
-  private Map<ShipType, Integer> processFleet(String[] fleet) {
-    Map<ShipType, Integer> totalFleet  = new HashMap<>();
-    totalFleet.put(ShipType.CARRIER, Integer.parseInt(fleet[0]));
-    totalFleet.put(ShipType.BATTLESHIP, Integer.parseInt(fleet[1]));
-    totalFleet.put(ShipType.DESTROYER, Integer.parseInt(fleet[2]));
-    totalFleet.put(ShipType.SUBMARINE, Integer.parseInt(fleet[3]));
-    return totalFleet;
-  }
-
 
 
 }
