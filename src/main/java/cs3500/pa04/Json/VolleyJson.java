@@ -6,4 +6,8 @@ import java.util.List;
 
 public record VolleyJson(
     @JsonProperty("coordinates") List<Coord> volley) {
+
+  public List<Coord> getVolley() {
+    return this.volley;
+  }
 }
