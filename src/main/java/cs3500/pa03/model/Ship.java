@@ -2,7 +2,9 @@ package cs3500.pa03.model;
 
 import cs3500.pa03.model.enums.ShipType;
 import cs3500.pa04.Direction;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -10,24 +12,27 @@ import java.util.Map;
  */
 public class Ship {
   //fields
-  private ShipType type;
-  private HashMap<Coord, Boolean> hitPositionsTracker;
+  private final ShipType type;
+  private final HashMap<Coord, Boolean> hitPositionsTracker;
+  private List<Coord> posns;
   private Direction direction;
 
   /**
    * Constructor - Initializes a Ship object
    *
    * @param type the type of this ship
-   */
+   */ //NEED TO DELETE!!!!
   public Ship(ShipType type) {
     this.type = type;
     this.hitPositionsTracker = new HashMap<>();
+
   }
 
   public Ship(ShipType type, Direction dir) {
     this.type = type;
     this.direction = dir;
     this.hitPositionsTracker = new HashMap<>();
+    this.posns = new ArrayList<>();
   }
 
 
@@ -60,7 +65,10 @@ public class Ship {
         this.hitPositionsTracker.put(position, true);
       }
     }
+
+
   }
+
 
   /**
    * Adds an entry with the give Coord as the key and false as the value
@@ -70,6 +78,8 @@ public class Ship {
   public void addHitPositionsTracker(Coord position) {
     // add the value and intitial value is false
     this.hitPositionsTracker.put(position, false);
+
+    this.posns.add(position);
   }
 
   /**
@@ -90,9 +100,7 @@ public class Ship {
     return this.hitPositionsTracker;
   }
 
-  public Direction getDirection() {
-    return this.direction;
-  }
+
 
   /*
   public String toString() {
@@ -103,4 +111,15 @@ public class Ship {
     return test;
   }*/
 
+  public int getLength() {
+    return hitPositionsTracker.size();
+  }
+
+  public Coord getStart() {
+    return posns.get(0);
+  }
+
+  public String getDirection() {
+    return this.direction.getName().toUpperCase();
+  }
 }

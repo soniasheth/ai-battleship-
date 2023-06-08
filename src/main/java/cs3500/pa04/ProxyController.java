@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import cs3500.pa03.controller.Controller;
 import cs3500.pa03.model.Coord;
 import cs3500.pa03.model.Ship;
 import cs3500.pa03.model.enums.ShipType;
@@ -26,7 +27,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-public class ProxyController {
+public class ProxyController implements Controller {
   private final Socket server;
   private final InputStream in;
   private final PrintStream out;
@@ -95,17 +96,19 @@ public class ProxyController {
   private void handleJoin() {
     //information needed for a client response
     String gitUserName = "soniasheth";
-    String gameType = "MULTI";
+    String gameType = "SINGLE";
 
     //create a joinJSON message to send back to the server
     JoinJson joinMessage = new JoinJson(gitUserName, gameType);
     JsonNode jsonResponse = JsonUtils.serializeRecord(joinMessage);
 
     //create the response to send back to server
-    MessageJson clientResponse = new MessageJson("join", jsonResponse);
+    MessageJson message = new MessageJson("join", jsonResponse);
+    JsonNode clientResponse = JsonUtils.serializeRecord(message);
 
     //sends back to the server
     this.out.println(clientResponse);
+    System.out.println(clientResponse);
   }
 
   /**
@@ -129,21 +132,25 @@ public class ProxyController {
     specification.put(ShipType.SUBMARINE, fleetSpec.numSubmarine());
 
     //have the player generate the fleet (and board)
-    List<Ship> aiShips = player.setup(height, width,specification);
+    List<Ship> aiShips = player.setup(height, width, specification);
 
     //convert to ShipAdapter for JSON
     List<ShipAdapter> aiShipsFinal = new ArrayList<>();
     for (Ship ship : aiShips) {
-      aiShipsFinal.add(new ShipAdapter(ship));
+      aiShipsFinal.add(new ShipAdapter(ship.getStart(), ship.getLength(), ship.getDirection()));
     }
 
     //create the json response
     FleetJson setUpFleet = new FleetJson(aiShipsFinal);
     JsonNode jsonResponse = JsonUtils.serializeRecord(setUpFleet);
 
+
+
     //send message back to the server
-    MessageJson clientResponse = new MessageJson("setup", jsonResponse);
+    MessageJson message = new MessageJson("setup", jsonResponse);
+    JsonNode clientResponse = JsonUtils.serializeRecord(message);
     this.out.println(clientResponse);
+    System.out.println(clientResponse);
   }
 
 
@@ -156,8 +163,10 @@ public class ProxyController {
     JsonNode jsonResponse = JsonUtils.serializeRecord(aiShots);
 
     //send message back to the server
-    MessageJson clientResponse = new MessageJson("setup", jsonResponse);
+    MessageJson message = new MessageJson("take-shots", jsonResponse);
+    JsonNode clientResponse = JsonUtils.serializeRecord(message);
     this.out.println(clientResponse);
+    System.out.println(clientResponse);
   }
 
   /**
@@ -178,8 +187,10 @@ public class ProxyController {
     JsonNode jsonResponse = JsonUtils.serializeRecord(reportDamage);
 
     //send message back to the server
-    MessageJson clientResponse = new MessageJson("report-damage", jsonResponse);
+    MessageJson message = new MessageJson("report-damage", jsonResponse);
+    JsonNode clientResponse = JsonUtils.serializeRecord(message);
     this.out.println(clientResponse);
+    System.out.println(clientResponse);
   }
 
   private void handleSuccessfulHits(JsonNode arguments) {
@@ -189,8 +200,10 @@ public class ProxyController {
 
     //send message back to the server
     JsonNode emptyContent = JsonNodeFactory.instance.objectNode();
-    MessageJson clientResponse = new MessageJson("successful-hits", emptyContent);
+    MessageJson message = new MessageJson("successful-hits", emptyContent);
+    JsonNode clientResponse = JsonUtils.serializeRecord(message);
     this.out.println(clientResponse);
+    System.out.println(clientResponse);
   }
 
   /**
@@ -205,8 +218,10 @@ public class ProxyController {
 
     //send message back to the server
     JsonNode emptyContent = JsonNodeFactory.instance.objectNode();
-    MessageJson clientResponse = new MessageJson("end-game", emptyContent);
+    MessageJson message = new MessageJson("end-game", emptyContent);
+    JsonNode clientResponse = JsonUtils.serializeRecord(message);
     this.out.println(clientResponse);
+    System.out.println(endGameMessage.getReason());
   }
 
 
