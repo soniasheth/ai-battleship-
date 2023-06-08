@@ -4,9 +4,9 @@ import cs3500.pa03.model.Cell;
 import cs3500.pa03.model.Coord;
 import cs3500.pa03.model.enums.HitStatus;
 import cs3500.pa03.model.enums.ShipType;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,23 +16,17 @@ import java.util.Map;
 public class MockView implements View {
 
   public StringBuilder build;
-  private int numTimesCalledDim;
-  private int numTimesCalledShots;
-  private int numTimesCalledFleet;
 
   /**
    * Constructor
    */
   public MockView() {
     this.build = new StringBuilder();
-    this.numTimesCalledDim = 0;
-    this.numTimesCalledShots = 0;
-    this.numTimesCalledFleet = 0;
 
   }
 
   @Override
-  public void displayAnything(String prompt) throws IOException {
+  public void displayAnything(String prompt) {
     build.append("display ");
 
   }
@@ -45,23 +39,32 @@ public class MockView implements View {
 
   @Override
   public Map<ShipType, Integer> getFleet(int size) {
-    return null;
+    build.append("getFleet ");
+
+    Map<ShipType, Integer> fleet = new HashMap<>();
+    fleet.put(ShipType.BATTLESHIP, 1);
+    fleet.put(ShipType.CARRIER, 1);
+    fleet.put(ShipType.DESTROYER, 1);
+    fleet.put(ShipType.SUBMARINE, 1);
+
+    return fleet;
   }
 
 
   @Override
-  public void displayBoard(Cell[][] board) throws IOException {
-    //build.append("displayBoard ");
+  public void displayBoard(Cell[][] board)  {
+    build.append("displayBoard ");
   }
 
   @Override
-  public void displayOpponentBoard(HitStatus[][] board) throws IOException {
-    //build.append("displayOB ");
+  public void displayOpponentBoard(HitStatus[][] board) {
+    build.append("displayOB ");
   }
 
   @Override
-  public List<Coord> getShots(int numShots, int widthMax, int heightMax) throws IOException {
-    return null;
+  public List<Coord> getShots(int numShots, int widthMax, int heightMax) {
+    build.append("getShots ");
+    return new ArrayList<>(Arrays.asList(new Coord(1, 1), new Coord(0, 1)));
   }
 
 

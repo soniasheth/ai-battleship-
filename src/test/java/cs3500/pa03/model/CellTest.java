@@ -1,9 +1,13 @@
 package cs3500.pa03.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import cs3500.pa03.model.enums.ShipType;
 import cs3500.pa03.model.enums.Status;
+import cs3500.pa04.Enums.Direction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +26,7 @@ class CellTest {
   @BeforeEach
   public void setUp() {
     cellEmpty = new Cell();
-    cellShip = new Cell(new Ship(ShipType.BATTLESHIP));
+    cellShip = new Cell(new Ship(ShipType.BATTLESHIP, Direction.HORIZONTAL));
   }
 
   /**
@@ -30,8 +34,8 @@ class CellTest {
    */
   @Test
   public void getHitStatus() {
-    assertEquals(false, cellEmpty.getHitStatus());
-    assertEquals(false, cellShip.getHitStatus());
+    assertFalse(cellEmpty.getHitStatus());
+    assertFalse(cellShip.getHitStatus());
   }
 
   /**
@@ -39,8 +43,8 @@ class CellTest {
    */
   @Test
   public void getShip() {
-    assertEquals(null, cellEmpty.getShip());
-    assertEquals(new Ship(ShipType.BATTLESHIP), cellShip.getShip());
+    assertNull(cellEmpty.getShip());
+    assertEquals(new Ship(ShipType.BATTLESHIP, Direction.HORIZONTAL), cellShip.getShip());
   }
 
   /**
@@ -57,14 +61,14 @@ class CellTest {
    */
   @Test
   public void setHitStatus() {
-    assertEquals(false, cellEmpty.getHitStatus());
-    assertEquals(false, cellShip.getHitStatus());
+    assertFalse(cellEmpty.getHitStatus());
+    assertFalse(cellShip.getHitStatus());
 
     cellEmpty.setHitStatus(true);
     cellShip.setHitStatus(true);
 
-    assertEquals(true, cellEmpty.getHitStatus());
-    assertEquals(true, cellShip.getHitStatus());
+    assertTrue(cellEmpty.getHitStatus());
+    assertTrue(cellShip.getHitStatus());
 
   }
 

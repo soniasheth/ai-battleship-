@@ -17,16 +17,7 @@ public class Ship {
   private List<Coord> posns;
   private Direction direction;
 
-  /**
-   * Constructor - Initializes a Ship object
-   *
-   * @param type the type of this ship
-   */ //NEED TO DELETE!!!!
-  public Ship(ShipType type) {
-    this.type = type;
-    this.hitPositionsTracker = new HashMap<>();
 
-  }
 
   public Ship(ShipType type, Direction dir) {
     this.type = type;

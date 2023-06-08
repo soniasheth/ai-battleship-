@@ -32,9 +32,14 @@ public class AiPlayer extends PlayerAbstract {
   public List<Coord> takeShots() {
     List<Coord> shots = new ArrayList<>();
     int shotNum = getNumShots();
+
+    if (shotNum > shotsLeft) {
+      shotNum = shotsLeft;
+    }
     //Random random = new Random();
     for (int i = 0; i < shotNum; i++) {
       boolean goodHit = false;
+
       //keep generating a shot until a non-hit spot is found
       while (!goodHit) {
         //generate a random spot on the board
@@ -45,6 +50,9 @@ public class AiPlayer extends PlayerAbstract {
           //update all the metadata with the hit shot
           goodHit = true;
           shots.add(new Coord(y, x));
+
+          shotsLeft--;
+
           opponentTracker[x][y] = HitStatus.MISS;
         }
       }

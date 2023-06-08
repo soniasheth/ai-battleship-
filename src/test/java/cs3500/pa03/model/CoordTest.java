@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import cs3500.pa03.model.enums.ShipType;
+import cs3500.pa04.Enums.Direction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -67,7 +68,7 @@ class CoordTest {
   public void testEqualsExeption() {
     assertThrows(
         IllegalArgumentException.class,
-        () -> coord.equals(new Ship(ShipType.CARRIER)));
+        () -> coord.equals(new Ship(ShipType.CARRIER, Direction.HORIZONTAL)));
   }
 
 }

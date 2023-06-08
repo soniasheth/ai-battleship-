@@ -24,6 +24,8 @@ public abstract class PlayerAbstract implements Player {
   protected HitStatus[][] opponentTracker;
   Random random;
 
+  protected int shotsLeft;
+
   /**
    * Constructor
    *
@@ -74,6 +76,8 @@ public abstract class PlayerAbstract implements Player {
     opponentTracker = new HitStatus[height][width];
     initOpponentTracker();
     this.ships = board.getShips();
+
+    this.shotsLeft = board.getSize();
   }
 
   /**

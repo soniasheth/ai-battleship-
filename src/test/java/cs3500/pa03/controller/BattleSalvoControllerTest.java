@@ -35,14 +35,11 @@ class BattleSalvoControllerTest {
 
   /**
    * Tests the run method in the controller
-   *
-   * @throws IOException if unable to run
    */
   @Test
-  public void testRun() throws IOException {
+  public void testRun()  {
     controller.run();
-    assertEquals("display boardDim boardDim boardDim getFleet getFleet "
-        + "getFleet getShots getShots getShots getShots display ", view.build.toString());
+    assertEquals("welcome getFleet getShots getShots display ", view.build.toString());
     assertEquals("setup takeshots"
         + " reportDamage hits takeshots reportDamage hits ", player1.build.toString());
     assertEquals("setup takeshots reportDamage hits "
