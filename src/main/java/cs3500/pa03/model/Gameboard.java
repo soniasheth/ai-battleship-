@@ -91,6 +91,7 @@ public class Gameboard {
         if (checkValidLocation(beginRow, endRow, endCol, beginCol)) {
           //creates a new ship
           Ship ship = new Ship(type, dir);
+
           for (int j = beginRow; j <= endRow; j++) {
             for (int k = beginCol; k <= endCol; k++) {
               Coord position = new Coord(k, j);

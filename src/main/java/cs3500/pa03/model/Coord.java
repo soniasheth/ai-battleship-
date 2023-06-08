@@ -52,10 +52,9 @@ public class Coord {
    */
   @Override
   public boolean equals(Object other) {
-    if (!(other instanceof Coord)) {
+    if (!(other instanceof Coord that)) {
       throw new IllegalArgumentException("Not a Coordinate");
     }
-    Coord that = (Coord) other;
     return this.coordX == that.coordX
         && this.coordY == that.coordY;
   }
