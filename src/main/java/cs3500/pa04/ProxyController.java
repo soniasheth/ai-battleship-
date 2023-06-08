@@ -23,16 +23,29 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Represents a Proxy Controller that receives + processes messages from the server
+ */
+
 public class ProxyController implements Controller {
+
+  //fields
   private final Socket server;
   private final InputStream in;
   private final PrintStream out;
   private final AiPlayer player;
   private final ObjectMapper mapper = new ObjectMapper();
+
+  /**
+   * Constructor
+   *
+   * @param server connection to the server socket
+   * @param ai the ai player
+   * @throws IOException if unable to open server
+   */
 
   public ProxyController(Socket server, AiPlayer ai) throws IOException {
     this.server = server;
@@ -58,8 +71,6 @@ public class ProxyController implements Controller {
     } catch (IOException e) {
       // Disconnected from server or parsing exception
     }
-    //handle the ending of the game
-
   }
 
 
@@ -91,7 +102,7 @@ public class ProxyController implements Controller {
   }
 
   /**
-   *
+   * Processes a server's join message and sends an appropriate message back
    */
   private void handleJoin() {
     //information needed for a client response
@@ -100,20 +111,16 @@ public class ProxyController implements Controller {
 
     //create a joinJSON message to send back to the server
     JoinJson joinMessage = new JoinJson(gitUserName, gameType);
-    JsonNode jsonResponse = JsonUtils.serializeRecord(joinMessage);
-
-    //create the response to send back to server
-    MessageJson message = new MessageJson("join", jsonResponse);
-    JsonNode clientResponse = JsonUtils.serializeRecord(message);
-
-    //sends back to the server
-    this.out.println(clientResponse);
-    System.out.println(clientResponse);
+    //serialize the response
+    JsonNode serializeResponse = JsonUtils.serializeRecord(joinMessage);
+    //send the message back to the server
+    sendMessageToServer("join", serializeResponse);
   }
 
   /**
+   * Processes a server's setup message and sends an appropriate message back
    *
-   * @param arguments
+   * @param arguments server's message args
    */
   private void handleSetUp(JsonNode arguments) {
     //convert to the data representation of set-up (SetUpJson)
@@ -142,36 +149,32 @@ public class ProxyController implements Controller {
 
     //create the json response
     FleetJson setUpFleet = new FleetJson(aiShipsFinal);
-    JsonNode jsonResponse = JsonUtils.serializeRecord(setUpFleet);
-
-
+    JsonNode serializeResponse = JsonUtils.serializeRecord(setUpFleet);
 
     //send message back to the server
-    MessageJson message = new MessageJson("setup", jsonResponse);
-    JsonNode clientResponse = JsonUtils.serializeRecord(message);
-    this.out.println(clientResponse);
-    System.out.println(clientResponse);
+    sendMessageToServer("setup", serializeResponse);
   }
 
 
+  /**
+   * Processes a server's take-shots message and sends an appropriate message back
+   */
   private void handleTakeShots() {
     //player takes the shots
     List<Coord> shots = player.takeShots();
 
     //create the json response
     VolleyJson aiShots = new VolleyJson(shots);
-    JsonNode jsonResponse = JsonUtils.serializeRecord(aiShots);
+    JsonNode serializeResponse = JsonUtils.serializeRecord(aiShots);
 
     //send message back to the server
-    MessageJson message = new MessageJson("take-shots", jsonResponse);
-    JsonNode clientResponse = JsonUtils.serializeRecord(message);
-    this.out.println(clientResponse);
-    System.out.println(clientResponse);
+   sendMessageToServer("take-shots", serializeResponse);
   }
 
   /**
+   * Processes a server's report-damage message and sends an appropriate message back
    *
-   * @param arguments args
+   * @param arguments server's message args
    */
 
   private void handleReportDamage(JsonNode arguments) {
@@ -187,30 +190,34 @@ public class ProxyController implements Controller {
     JsonNode jsonResponse = JsonUtils.serializeRecord(reportDamage);
 
     //send message back to the server
-    MessageJson message = new MessageJson("report-damage", jsonResponse);
-    JsonNode clientResponse = JsonUtils.serializeRecord(message);
-    this.out.println(clientResponse);
-    System.out.println(clientResponse);
+    sendMessageToServer("report-damage", jsonResponse);
   }
 
+  /**
+   * Processes a server's successful hits message and sends an appropriate message back
+   *
+   * @param arguments server's message args
+   */
   private void handleSuccessfulHits(JsonNode arguments) {
+    //shots received frm server
     VolleyJson shotsReceived = this.mapper.convertValue(arguments, VolleyJson.class);
     List<Coord> shots = shotsReceived.getVolley();
+
+    //call player method
     player.successfulHits(shots);
 
     //send message back to the server
     JsonNode emptyContent = JsonNodeFactory.instance.objectNode();
-    MessageJson message = new MessageJson("successful-hits", emptyContent);
-    JsonNode clientResponse = JsonUtils.serializeRecord(message);
-    this.out.println(clientResponse);
-    System.out.println(clientResponse);
+    sendMessageToServer("successful-hits", emptyContent);
   }
 
   /**
+   * Processes a server's end-game message and sends an appropriate message back
    *
-   * @param arguments args
+   * @param arguments server's message contnent
    */
   private void handleEndGame(JsonNode arguments) {
+    //get the server's end game message content
     EndGameJson endGameMessage = this.mapper.convertValue(arguments, EndGameJson.class);
 
     //call endgame on player
@@ -218,13 +225,23 @@ public class ProxyController implements Controller {
 
     //send message back to the server
     JsonNode emptyContent = JsonNodeFactory.instance.objectNode();
-    MessageJson message = new MessageJson("end-game", emptyContent);
-    JsonNode clientResponse = JsonUtils.serializeRecord(message);
-    this.out.println(clientResponse);
+    sendMessageToServer("end-game", emptyContent);
     System.out.println(endGameMessage.getReason());
   }
 
-
-
-
+  /**
+   * Packages a MessageJson message and send it back to the server
+   *
+   * @param methodName method name
+   * @param content content being sent back
+   */
+  private void sendMessageToServer(String methodName, JsonNode content) {
+    //create the message JSON node
+    MessageJson message = new MessageJson(methodName, content);
+    //serialize the message
+    JsonNode clientResponse = JsonUtils.serializeRecord(message);
+    //send message back to the server
+    this.out.println(clientResponse);
+    //System.out.println(clientResponse);
+  }
 }
