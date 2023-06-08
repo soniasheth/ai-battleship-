@@ -16,20 +16,21 @@ public class Driver {
    * @param args - no command line args required
    */
   public static void main(String[] args) {
-    /*
-    example:
-        String host = "0.0.0.0";
-        int port = 35001;
-     */
+    //play the game
     if (args.length == 2) {
+      //play game by connecting to the server
       try {
         Driver.runClient(args[0], Integer.parseInt(args[1])); //host, port -- validate inputs
       } catch (IOException e) {
         throw new RuntimeException(e.getMessage());
       }
-    } else {
+    } else if(args.length == 0) {
+      //play the game manually
       ManualBattleship battle = new ManualBattleship();
       battle.run();
+    } else {
+      //unable to run
+      throw new RuntimeException("Cannot run game");
     }
   }
 

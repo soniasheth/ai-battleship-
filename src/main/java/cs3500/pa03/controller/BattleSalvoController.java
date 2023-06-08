@@ -43,53 +43,59 @@ public class BattleSalvoController implements Controller {
    *
    * @throws IOException if unable to append
    */
-  public void run() throws IOException {
+  public void run() {
+    try {
+      //get board dimensions
+      List<Integer> dimensions = view.welcome();
+      int height = dimensions.get(0);
+      int width =  dimensions.get(1);
+      int maxNumShips = Math.min(height, width);
+      //get the fleet
+      Map<ShipType, Integer>  fleet = view.getFleet(maxNumShips);
+      // init the game
+      List<Ship> player1Ships = player1.setup(height, width, fleet);
+      List<Ship> player2Ships = player2.setup(height, width, fleet);
 
-    //get board dimensions
-    List<Integer> dimensions = view.welcome();
-    int height = dimensions.get(0);
-    int width =  dimensions.get(1);
-    int maxNumShips = Math.min(height, width);
+      //init the shot arraylist for the loop and give them one shot to begin with in order to kick
+      //game off - those coordinates will be over written
+      List<Coord> player1Shots = new ArrayList<>();
+      player1Shots.add(new Coord(0, 0));
+      List<Coord> player2Shots = new ArrayList<>();
+      player2Shots.add(new Coord(0, 0));
 
-    //get the fleet
-    Map<ShipType, Integer>  fleet = view.getFleet(maxNumShips);
-
-    // init the game
-    // also displays the player's ships at the beginning of the game
-    List<Ship> player1Ships = player1.setup(height, width, fleet);
-    List<Ship> player2Ships = player2.setup(height, width, fleet);
-
-    //init the shot arraylist for the loop and give them one shot to begin with in order to kick
-    //game off - those coordinates will be over written
-    List<Coord> player1Shots = new ArrayList<>();
-    player1Shots.add(new Coord(0, 0));
-    List<Coord> player2Shots = new ArrayList<>();
-    player2Shots.add(new Coord(0, 0));
-
-    //game loop
-    while (getShotNum(player1Ships) != 0 && getShotNum(player2Ships) != 0) {
-      // get the shots and keep looping until they are valid
-      List<Coord>  shots = view.getShots(getShotNum(player1Ships), width, height);
-
-      shotHolder.setShots(shots);
-      //each player takes shots
-      player1Shots = player1.takeShots();
-      player2Shots = player2.takeShots();
-      //shots are sent to other player
-      List<Coord> player1ShipsHit = player1.reportDamage(player2Shots);
-      List<Coord> player2ShipsHit = player2.reportDamage(player1Shots);
-      //the players are informed of the hit ships
-      player1.successfulHits(player2ShipsHit);
-      player2.successfulHits(player1ShipsHit);
+      //game loop
+      while (getShotNum(player1Ships) != 0 && getShotNum(player2Ships) != 0) {
+        // get the shots and keep looping until they are valid
+        List<Coord>  shots = view.getShots(getShotNum(player1Ships), width, height);
+        shotHolder.setShots(shots);
+        //each player takes shots
+        player1Shots = player1.takeShots();
+        player2Shots = player2.takeShots();
+        //shots are sent to other player
+        List<Coord> player1ShipsHit = player1.reportDamage(player2Shots);
+        List<Coord> player2ShipsHit = player2.reportDamage(player1Shots);
+        //the players are informed of the hit ships
+        player1.successfulHits(player2ShipsHit);
+        player2.successfulHits(player1ShipsHit);
+      }
+      //end message
+      endGameMessage(player1Shots, player2Shots);
+    } catch (IOException e) {
+      throw new RuntimeException("Unable to run game");
     }
+  }
 
-    //end message
-    if (player1Shots.isEmpty() && player2Shots.isEmpty()) {
-      view.displayAnything("GAME OVER. Draw.");
-    } else if (player1Shots.isEmpty()) {
-      view.displayAnything("GAME OVER. " + player2.name() + " won!");
-    } else {
-      view.displayAnything("GAME OVER. " + player1.name() + " won!");
+  private void endGameMessage(List<Coord> player1Shots, List<Coord> player2Shots) {
+    try {
+      if (player1Shots.isEmpty() && player2Shots.isEmpty()) {
+        view.displayAnything("GAME OVER. Draw.");
+      } else if (player1Shots.isEmpty()) {
+        view.displayAnything("GAME OVER. " + player2.name() + " won!");
+      } else {
+        view.displayAnything("GAME OVER. " + player1.name() + " won!");
+      }
+    } catch(IOException e) {
+      throw new RuntimeException("Issues Displaying.");
     }
   }
 
@@ -108,6 +114,4 @@ public class BattleSalvoController implements Controller {
     }
     return num;
   }
-
-
 }
