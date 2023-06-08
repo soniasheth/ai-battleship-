@@ -17,9 +17,8 @@ public interface View {
    * Appends the given string to the appendable
    *
    * @param prompt String, message to display / append
-   * @throws IOException if unable to append
    */
-  void displayAnything(String prompt) throws IOException;
+  void displayAnything(String prompt) ;
 
   List<Integer> welcome();
 
@@ -37,23 +36,22 @@ public interface View {
    *
    * @param board the gameboard
    */
-  void displayBoard(Cell[][] board) throws IOException;
+  void displayBoard(Cell[][] board);
 
   /**
    * Displays the opponenet board data to the console
    *
    * @param board opponent board data
    */
-  void displayOpponentBoard(HitStatus[][] board) throws IOException;
+  void displayOpponentBoard(HitStatus[][] board);
 
   /**
    * Gets the user's input for their shots
    *
    * @param numShots number of shots they can take
    * @return List of coordinates (shots)
-   * @throws IOException if unable to append with the appendable
    */
-  List<Coord> getShots(int numShots, int widthMax, int heightMax) throws IOException;
+  List<Coord> getShots(int numShots, int widthMax, int heightMax) ;
 
 
 }

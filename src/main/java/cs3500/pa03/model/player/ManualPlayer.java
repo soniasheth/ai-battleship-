@@ -49,12 +49,10 @@ public class ManualPlayer extends PlayerAbstract {
   public List<Ship> setup(int height, int width, Map<ShipType, Integer> specifications) {
     setupHelper(height, width, specifications);
     //need to display starting conditons for the player
-    try {
+
       view.displayBoard(board.getGameBoard());
       view.displayOpponentBoard(opponentTracker);
-    } catch (IOException e) {
-      throw new RuntimeException();
-    }
+
     return board.getShips();
   }
 
@@ -67,9 +65,17 @@ public class ManualPlayer extends PlayerAbstract {
   @Override
   public List<Coord> takeShots() {
     List<Coord> shots = shotHolder.getShots();
+
+    //for edge case for when shots left are less than the shots the user inputted
+    if (shots.size() > shotsLeft) {
+      shots = shots.subList(0, shotsLeft - 1);
+    }
+
+
     //update the opponent tracker to all the shots to miss
     for (Coord coord : shots) {
       this.opponentTracker[coord.getY()][coord.getX()] = HitStatus.MISS;
+      shotsLeft--;
     }
     return shots;
   }
@@ -88,12 +94,10 @@ public class ManualPlayer extends PlayerAbstract {
       this.opponentTracker[coord.getY()][coord.getX()] = HitStatus.HIT;
     }
     // update the boards + display
-    try {
+
       view.displayBoard(board.getGameBoard());
       view.displayOpponentBoard(opponentTracker);
-    } catch (IOException e) {
-      throw new RuntimeException();
-    }
+
   }
 
 

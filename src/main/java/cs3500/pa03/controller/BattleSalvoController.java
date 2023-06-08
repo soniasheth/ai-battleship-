@@ -41,10 +41,9 @@ public class BattleSalvoController implements Controller {
   /**
    * Runs through each step of the game, including taking user input and displaying content
    *
-   * @throws IOException if unable to append
    */
   public void run() {
-    try {
+
       //get board dimensions
       List<Integer> dimensions = view.welcome();
       int height = dimensions.get(0);
@@ -80,13 +79,11 @@ public class BattleSalvoController implements Controller {
       }
       //end message
       endGameMessage(player1Shots, player2Shots);
-    } catch (IOException e) {
-      throw new RuntimeException("Unable to run game");
-    }
+
   }
 
   private void endGameMessage(List<Coord> player1Shots, List<Coord> player2Shots) {
-    try {
+
       if (player1Shots.isEmpty() && player2Shots.isEmpty()) {
         view.displayAnything("GAME OVER. Draw.");
       } else if (player1Shots.isEmpty()) {
@@ -94,9 +91,7 @@ public class BattleSalvoController implements Controller {
       } else {
         view.displayAnything("GAME OVER. " + player1.name() + " won!");
       }
-    } catch(IOException e) {
-      throw new RuntimeException("Issues Displaying.");
-    }
+
   }
 
   /**

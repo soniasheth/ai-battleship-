@@ -9,8 +9,10 @@ import cs3500.pa03.model.enums.ShipType;
 import cs3500.pa03.model.ShotHolder;
 import cs3500.pa03.view.BattleSalvoView;
 import cs3500.pa03.view.View;
+import cs3500.pa04.Enums.Direction;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,14 +60,14 @@ class PlayerAbstractTest {
     specifications.put(ShipType.SUBMARINE, 1);
     specifications.put(ShipType.DESTROYER, 1);
 
-    Ship ship1 = new Ship(ShipType.CARRIER);
-    Ship ship2 = new Ship(ShipType.BATTLESHIP);
-    Ship ship3 = new Ship(ShipType.DESTROYER);
+    Ship ship1 = new Ship(ShipType.CARRIER, Direction.HORIZONTAL);
+    Ship ship2 = new Ship(ShipType.BATTLESHIP, Direction.HORIZONTAL);
+    Ship ship3 = new Ship(ShipType.DESTROYER, Direction.HORIZONTAL);
 
     ship1.addHitPositionsTracker(new Coord(5, 1));
     ship2.addHitPositionsTracker(new Coord(4, 5));
     ship3.addHitPositionsTracker(new Coord(0, 4));
-    Ship ship4 = new Ship(ShipType.SUBMARINE);
+    Ship ship4 = new Ship(ShipType.SUBMARINE, Direction.HORIZONTAL);
     ship4.addHitPositionsTracker(new Coord(1, 3));
 
     ship1.addHitPositionsTracker(new Coord(5, 0));
@@ -86,11 +88,7 @@ class PlayerAbstractTest {
     ship4.addHitPositionsTracker(new Coord(1, 2));
     ship4.addHitPositionsTracker(new Coord(1, 1));
 
-    List<Ship> ships = new ArrayList<>();
-    ships.add(ship1);
-    ships.add(ship2);
-    ships.add(ship3);
-    ships.add(ship4);
+    List<Ship> ships = new ArrayList<>(Arrays.asList(ship1, ship2, ship3, ship4));
 
 
     List<Ship> playerShips1 = player1.setup(6, 6, specifications);

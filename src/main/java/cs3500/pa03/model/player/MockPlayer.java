@@ -4,6 +4,7 @@ import cs3500.pa03.model.Coord;
 import cs3500.pa03.model.enums.GameResult;
 import cs3500.pa03.model.Ship;
 import cs3500.pa03.model.enums.ShipType;
+import cs3500.pa04.Enums.Direction;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -32,7 +33,7 @@ public class MockPlayer implements Player {
 
   @Override
   public String name() {
-    //build.append("name ");
+    build.append("name ");
     return "";
   }
 
@@ -48,7 +49,7 @@ public class MockPlayer implements Player {
   @Override
   public List<Ship> setup(int height, int width, Map<ShipType, Integer> specifications) {
     build.append("setup ");
-    Ship ship = new Ship(ShipType.SUBMARINE);
+    Ship ship = new Ship(ShipType.SUBMARINE, Direction.HORIZONTAL);
     ship.addHitPositionsTracker(new Coord(0, 0));
 
     List<Ship> playShips = new ArrayList<>();
@@ -84,7 +85,7 @@ public class MockPlayer implements Player {
   @Override
   public List<Coord> reportDamage(List<Coord> opponentShotsOnBoard) {
     build.append("reportDamage ");
-    return null;
+    return new ArrayList<>(Arrays.asList(new Coord(0, 1), new Coord(0, 0)));
   }
 
   /**
@@ -111,6 +112,6 @@ public class MockPlayer implements Player {
    */
   @Override
   public void endGame(GameResult result, String reason) {
-    //build.append("endGame ");
+    build.append("endGame ");
   }
 }

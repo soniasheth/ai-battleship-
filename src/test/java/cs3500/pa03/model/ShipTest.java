@@ -3,9 +3,12 @@ package cs3500.pa03.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import cs3500.pa03.model.enums.ShipType;
+import cs3500.pa04.Enums.Direction;
 import java.util.HashMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +21,7 @@ class ShipTest {
 
   @BeforeEach
   public void setup() {
-    ship = new Ship(ShipType.SUBMARINE);
+    ship = new Ship(ShipType.SUBMARINE, Direction.HORIZONTAL);
   }
 
   /**
@@ -30,7 +33,7 @@ class ShipTest {
     ship.addHitPositionsTracker(new Coord(1, 2));
     ship.addHitPositionsTracker(new Coord(1, 3));
 
-    assertEquals(false, ship.isSunk());
+    assertFalse(ship.isSunk());
   }
 
   /**
@@ -46,8 +49,9 @@ class ShipTest {
     ship.updateHitPositions(new Coord(1, 2));
     ship.updateHitPositions(new Coord(1, 3));
 
-    assertEquals(true, ship.isSunk());
+    assertTrue(ship.isSunk());
   }
+
 
   /**
    * Tests the addHitPositionsTracker method
@@ -87,13 +91,13 @@ class ShipTest {
    */
   @Test
   public void testEqualsTrue() {
-    Ship ship1 = new Ship(ShipType.SUBMARINE);
-    assertEquals(true, ship.equals(ship1));
+    Ship ship1 = new Ship(ShipType.SUBMARINE, Direction.HORIZONTAL);
+    assertEquals(ship, ship1);
 
     ship1.addHitPositionsTracker(new Coord(0, 0));
     ship.addHitPositionsTracker(new Coord(0, 0));
 
-    assertEquals(true, ship.equals(ship1));
+    assertEquals(ship, ship1);
   }
 
   /**
@@ -101,13 +105,13 @@ class ShipTest {
    */
   @Test
   public void testEqualsFalse() {
-    Ship ship1 = new Ship(ShipType.DESTROYER);
-    assertEquals(false, ship.equals(ship1));
+    Ship ship1 = new Ship(ShipType.DESTROYER, Direction.HORIZONTAL);
+    assertNotEquals(ship, ship1);
 
     ship1.addHitPositionsTracker(new Coord(0, 0));
     ship.addHitPositionsTracker(new Coord(1, 0));
 
-    assertFalse(ship.equals(ship1));
+    assertNotEquals(ship, ship1);
   }
 
   /**

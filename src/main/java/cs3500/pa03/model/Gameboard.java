@@ -150,4 +150,8 @@ public class Gameboard {
   public ArrayList<Ship> getShips() {
     return this.ships;
   }
+
+  public int getSize() {
+    return height * width;
+  }
 }
