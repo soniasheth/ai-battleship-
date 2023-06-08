@@ -9,6 +9,7 @@ import cs3500.pa03.model.Coord;
 import cs3500.pa03.model.Ship;
 import cs3500.pa03.model.enums.ShipType;
 import cs3500.pa03.model.player.AiPlayer;
+import cs3500.pa04.Enums.GameType;
 import cs3500.pa04.Json.EndGameJson;
 import cs3500.pa04.Json.FleetJson;
 import cs3500.pa04.Json.FleetSpecJson;
@@ -16,6 +17,7 @@ import cs3500.pa04.Json.JoinJson;
 import cs3500.pa04.Json.JsonUtils;
 import cs3500.pa04.Json.MessageJson;
 import cs3500.pa04.Json.SetUpJson;
+import cs3500.pa04.Json.ShipAdapter;
 import cs3500.pa04.Json.VolleyJson;
 import java.io.IOException;
 import java.io.InputStream;
@@ -107,10 +109,10 @@ public class ProxyController implements Controller {
   private void handleJoin() {
     //information needed for a client response
     String gitUserName = "soniasheth";
-    String gameType = "SINGLE";
+    GameType gameType = GameType.SINGLE;
 
     //create a joinJSON message to send back to the server
-    JoinJson joinMessage = new JoinJson(gitUserName, gameType);
+    JoinJson joinMessage = new JoinJson(gitUserName, gameType.name().toUpperCase());
     //serialize the response
     JsonNode serializeResponse = JsonUtils.serializeRecord(joinMessage);
     //send the message back to the server

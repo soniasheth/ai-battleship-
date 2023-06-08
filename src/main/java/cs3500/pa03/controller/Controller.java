@@ -12,5 +12,5 @@ public interface Controller {
    *
    * @throws IOException if unable to run properly
    */
-  void run() throws IOException;
+  void run();
 }
