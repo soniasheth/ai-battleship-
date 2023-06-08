@@ -20,19 +20,15 @@ public class ManualBattleship {
    * Runs the game
    */
   public void run() {
-    try {
-      //create view
-      View view = new BattleSalvoView(new PrintStream(System.out),
-          new InputStreamReader(System.in));
-      ShotHolder shotHolder = new ShotHolder();
-      //create players
-      Player player1 = new ManualPlayer("manual", shotHolder, view, new Random());
-      Player player2 = new AiPlayer("AI", new Random());
-      //controller + run
-      Controller controller = new BattleSalvoController(player1, player2, view, shotHolder);
-      controller.run();
-    } catch (IOException e) {
-      throw new RuntimeException("Unable to run program.");
-    }
+    //create view
+    View view = new BattleSalvoView(new PrintStream(System.out),
+        new InputStreamReader(System.in));
+    ShotHolder shotHolder = new ShotHolder();
+    //create players
+    Player player1 = new ManualPlayer("manual", shotHolder, view, new Random());
+    Player player2 = new AiPlayer("AI", new Random());
+    //controller + run
+    Controller controller = new BattleSalvoController(player1, player2, view, shotHolder);
+    controller.run();
   }
 }
