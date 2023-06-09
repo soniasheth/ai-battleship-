@@ -8,9 +8,9 @@ import cs3500.pa03.controller.Controller;
 import cs3500.pa03.model.Coord;
 import cs3500.pa03.model.Ship;
 import cs3500.pa03.model.enums.ShipType;
-import cs3500.pa03.model.player.AiPlayer;
 import cs3500.pa03.model.player.Player;
 import cs3500.pa04.Enums.GameType;
+import cs3500.pa04.Enums.Message;
 import cs3500.pa04.Json.EndGameJson;
 import cs3500.pa04.Json.FleetJson;
 import cs3500.pa04.Json.FleetSpecJson;
@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * Represents a Proxy Controller that receives + processes messages from the server
@@ -87,21 +88,16 @@ public class ProxyController implements Controller {
     String name = message.methodName();
     JsonNode arguments = message.arguments();
 
-    if ("join".equals(name)) {
-      handleJoin();
-    } else if ("setup".equals(name)) {
-      handleSetUp(arguments);
-    } else if ("take-shots".equals(name)) {
-      handleTakeShots();
-    } else if ("report-damage".equals(name)) {
-      handleReportDamage(arguments);
-    } else if ("successful-hits".equals(name)) {
-      handleSuccessfulHits(arguments);
-    } else if ("end-game".equals(name)) {
-      handleEndGame(arguments);
-    } else {
-      throw new IllegalStateException("Invalid message name");
+    switch (name) {
+      case "join" -> handleJoin();
+      case "setup" -> handleSetUp(arguments);
+      case "take-shots" -> handleTakeShots();
+      case "report-damage" -> handleReportDamage(arguments);
+      case "successful-hits" -> handleSuccessfulHits(arguments);
+      case "end-game" -> handleEndGame(arguments);
+      default -> throw new IllegalStateException("Invalid message name");
     }
+
   }
 
   /**
@@ -113,11 +109,11 @@ public class ProxyController implements Controller {
     GameType gameType = GameType.SINGLE;
 
     //create a joinJSON message to send back to the server
-    JoinJson joinMessage = new JoinJson(gitUserName, gameType.name().toUpperCase());
+    JoinJson joinMessage = new JoinJson(gitUserName, gameType.name());
     //serialize the response
     JsonNode serializeResponse = JsonUtils.serializeRecord(joinMessage);
     //send the message back to the server
-    sendMessageToServer("join", serializeResponse);
+    sendMessageToServer(Message.JOIN.message(), serializeResponse);
   }
 
   /**
@@ -155,7 +151,7 @@ public class ProxyController implements Controller {
     JsonNode serializeResponse = JsonUtils.serializeRecord(setUpFleet);
 
     //send message back to the server
-    sendMessageToServer("setup", serializeResponse);
+    sendMessageToServer(Message.SETUP.message(), serializeResponse);
   }
 
 
@@ -171,7 +167,7 @@ public class ProxyController implements Controller {
     JsonNode serializeResponse = JsonUtils.serializeRecord(aiShots);
 
     //send message back to the server
-   sendMessageToServer("take-shots", serializeResponse);
+   sendMessageToServer(Message.TAKESHOTS.message(), serializeResponse);
   }
 
   /**
@@ -193,7 +189,7 @@ public class ProxyController implements Controller {
     JsonNode jsonResponse = JsonUtils.serializeRecord(reportDamage);
 
     //send message back to the server
-    sendMessageToServer("report-damage", jsonResponse);
+    sendMessageToServer(Message.REPORTDAMAGE.message(), jsonResponse);
   }
 
   /**
@@ -211,7 +207,7 @@ public class ProxyController implements Controller {
 
     //send message back to the server
     JsonNode emptyContent = JsonNodeFactory.instance.objectNode();
-    sendMessageToServer("successful-hits", emptyContent);
+    sendMessageToServer(Message.SUCCESSFULHITS.message(), emptyContent);
   }
 
   /**
@@ -228,7 +224,7 @@ public class ProxyController implements Controller {
 
     //send message back to the server
     JsonNode emptyContent = JsonNodeFactory.instance.objectNode();
-    sendMessageToServer("end-game", emptyContent);
+    sendMessageToServer(Message.ENDGAME.message(), emptyContent);
     System.out.println(endGameMessage.getReason());
   }
 
