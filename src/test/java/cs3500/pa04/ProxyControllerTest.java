@@ -31,6 +31,7 @@ import org.junit.jupiter.api.Test;
 class ProxyControllerTest {
   private ByteArrayOutputStream testLog;
   private ProxyController controller;
+  private Random random;
 
   private String separation;
 
@@ -39,6 +40,7 @@ class ProxyControllerTest {
     this.testLog = new ByteArrayOutputStream(2048);
     assertEquals("", logToString());
     this.separation = System.lineSeparator();
+    this.random = new Random(100);
 
   }
 
@@ -76,7 +78,8 @@ class ProxyControllerTest {
   @Test
   public void testHandleSetUp() {
     //prepare a sample message
-    FleetSpecJson fleet = new FleetSpecJson(1,1,1,1);
+    //fleet with one ship for testing purposes
+    FleetSpecJson fleet = new FleetSpecJson(1,0,0,0);
     SetUpJson setUp = new SetUpJson(10,10, fleet);
     JsonNode serverMessage = createSampleMessage("setup", setUp);
 
@@ -85,13 +88,16 @@ class ProxyControllerTest {
 
     // Create a ProxyController
     try {
-      this.controller = new ProxyController(socket, new AiPlayer("ai", new Random()));
+      this.controller = new ProxyController(socket, new AiPlayer("ai", random));
     } catch (IOException e) {
       fail(); // fail if the controller can't be created
     }
 
     // run the controller and verify the response
     this.controller.run();
+    String expected = "{\"method-name\":\"setup\",\"arguments\":{\"fleet\":[{\"coord\""
+        + ":{\"x\":4,\"y\":4},\"length\":5,\"direction\":\"VERTICAL\"}]}}" + separation;
+    assertEquals(expected, logToString());
     responseToClass(MessageJson.class);
   }
 
@@ -107,7 +113,7 @@ class ProxyControllerTest {
     // Create the client with all necessary messages
     Mocket socket = new Mocket(this.testLog, List.of(serverMessage.toString()));
 
-    // Create a ProxyController
+    // Create a ProxyController with a mock player for take shots
     try {
       this.controller = new ProxyController(socket, new MockPlayer()); //used a mock player
     } catch (IOException e) {
@@ -116,6 +122,9 @@ class ProxyControllerTest {
 
     // run the controller and verify the response
     this.controller.run();
+    String expected = "{\"method-name\":\"take-shots\",\"arguments\":{\"coordinates\":[{\"x\":0,\"y"
+        + "\":0},{\"x\":1,\"y\":1},{\"x\":2,\"y\":2},{\"x\":3,\"y\":3}]}}" + separation;
+    assertEquals(expected, logToString());
     responseToClass(MessageJson.class);
   }
 
@@ -140,11 +149,14 @@ class ProxyControllerTest {
 
     // run the controller and verify the response
     this.controller.run();
+    String expected = "{\"method-name\":\"report-damage\",\"arguments\""
+        + ":{\"coordinates\":[{\"x\":0,\"y\":1},{\"x\":0,\"y\":0}]}}" + separation;
+    assertEquals(expected, logToString());
     responseToClass(MessageJson.class);
   }
 
   /**
-   * Tets the handleSuccuessfulHits method
+   * Tests the handleSuccuessfulHits method
    */
   @Test
   public void testHandleSuccHits() {
@@ -155,7 +167,7 @@ class ProxyControllerTest {
     // Create the client with all necessary messages
     Mocket socket = new Mocket(this.testLog, List.of(serverMessage.toString()));
 
-    // Create a ProxyController
+    // Create a ProxyController with a mock player
     try {
       this.controller = new ProxyController(socket, new MockPlayer()); //used a mock player
     } catch (IOException e) {
@@ -164,6 +176,8 @@ class ProxyControllerTest {
 
     // run the controller and verify the response
     this.controller.run();
+    String expected = "{\"method-name\":\"successful-hits\",\"arguments\":{}}" + separation;
+    assertEquals(expected, logToString());
     responseToClass(MessageJson.class);
   }
 
@@ -179,7 +193,7 @@ class ProxyControllerTest {
     // Create the client with all necessary messages
     Mocket socket = new Mocket(this.testLog, List.of(serverMessage.toString()));
 
-    // Create a ProxyController
+    // Create a ProxyController with a MockPlayer
     try {
       this.controller = new ProxyController(socket, new MockPlayer()); //used a mock player
     } catch (IOException e) {
@@ -188,6 +202,8 @@ class ProxyControllerTest {
 
     // run the controller and verify the response
     this.controller.run();
+    String expected = "{\"method-name\":\"end-game\",\"arguments\":{}}" + separation;
+    assertEquals(expected, logToString());
     responseToClass(MessageJson.class);
   }
 
