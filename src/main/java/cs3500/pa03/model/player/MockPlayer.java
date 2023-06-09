@@ -105,8 +105,6 @@ public class MockPlayer implements Player {
       ships.remove(0);
     }
     calledSuccHits = true;
-
-
   }
 
   /**
