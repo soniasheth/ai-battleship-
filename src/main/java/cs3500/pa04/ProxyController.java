@@ -9,6 +9,7 @@ import cs3500.pa03.model.Coord;
 import cs3500.pa03.model.Ship;
 import cs3500.pa03.model.enums.ShipType;
 import cs3500.pa03.model.player.AiPlayer;
+import cs3500.pa03.model.player.Player;
 import cs3500.pa04.Enums.GameType;
 import cs3500.pa04.Json.EndGameJson;
 import cs3500.pa04.Json.FleetJson;
@@ -38,7 +39,7 @@ public class ProxyController implements Controller {
   private final Socket server;
   private final InputStream in;
   private final PrintStream out;
-  private final AiPlayer player;
+  private final Player player;
   private final ObjectMapper mapper = new ObjectMapper();
 
   /**
@@ -49,7 +50,7 @@ public class ProxyController implements Controller {
    * @throws IOException if unable to open server
    */
 
-  public ProxyController(Socket server, AiPlayer ai) throws IOException {
+  public ProxyController(Socket server, Player ai) throws IOException {
     this.server = server;
     this.player = ai;
     this.in = server.getInputStream();

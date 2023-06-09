@@ -20,13 +20,4 @@ public enum ShipType {
     return size;
   }
 
-  /**
-   * Returns the name of the ship type
-   *
-   * @return String, name of the ship type
-   */
-  public String toString() {
-    return this.name();
-  }
-
 }
