@@ -80,7 +80,7 @@ class ProxyControllerTest {
   @Test
   public void testHandleSetUp() {
     //prepare a sample message
-    FleetSpecJson fleet = new FleetSpecJson(1, 1, 1, 1);
+    FleetSpecJson fleet = new FleetSpecJson(1, 0, 0, 0);
     SetUpJson setUp = new SetUpJson(10, 10, fleet);
     JsonNode serverMessage = createSampleMessage("setup", setUp);
 
