@@ -14,8 +14,8 @@ public class Ship {
   //fields
   private final ShipType type;
   private final HashMap<Coord, Boolean> hitPositionsTracker;
-  private List<Coord> posns;
-  private Direction direction;
+  private final List<Coord> posns;
+  private final Direction direction;
 
 
 
@@ -90,17 +90,6 @@ public class Ship {
   public HashMap<Coord, Boolean> getHitPositionsTracker() {
     return this.hitPositionsTracker;
   }
-
-
-
-  /*
-  public String toString() {
-    String test = "";
-    for (Map.Entry<Coord, Boolean> element : this.hitPositionsTracker.entrySet()) {
-      test = this.type.name()+ test + element.getKey().toString() + "\n";
-    }
-    return test;
-  }*/
 
   public int getLength() {
     return hitPositionsTracker.size();

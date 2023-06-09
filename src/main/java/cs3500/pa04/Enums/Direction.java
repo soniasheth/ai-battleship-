@@ -8,7 +8,7 @@ public enum Direction {
   VERTICAL("vertical"),
   HORIZONTAL("horizontal");
 
-  private String name;
+  private final String name;
 
   Direction(String name) {
     this.name = name;

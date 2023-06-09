@@ -32,10 +32,14 @@ class ProxyControllerTest {
   private ByteArrayOutputStream testLog;
   private ProxyController controller;
 
+  private String separation;
+
   @BeforeEach
   public void setup() {
     this.testLog = new ByteArrayOutputStream(2048);
     assertEquals("", logToString());
+    this.separation = System.lineSeparator();
+
   }
 
   /**
@@ -60,7 +64,8 @@ class ProxyControllerTest {
     // run the controller and verify the response
     this.controller.run();
     String expected = "{\"method-name\":\"join\",\"arguments\":{\"name\":"
-        + "\"soniasheth\",\"game-type\":\"SINGLE\"}}\n";
+        + "\"soniasheth\",\"game-type\":\"SINGLE\"}}" + separation;
+
     assertEquals(expected, logToString());
     responseToClass(MessageJson.class);
   }

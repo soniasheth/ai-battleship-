@@ -11,11 +11,11 @@ import java.util.Random;
  */
 public class Gameboard {
   //fields
-  private int height;
-  private int width;
-  private ArrayList<Ship> ships;
-  private Cell[][] board;
-  private Random random;
+  private final int height;
+  private final int width;
+  private final ArrayList<Ship> ships;
+  private final Cell[][] board;
+  private final Random random;
 
   /**
    * Constructor: initializes a Gameboard
