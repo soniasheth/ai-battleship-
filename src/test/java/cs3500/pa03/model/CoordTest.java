@@ -2,6 +2,7 @@ package cs3500.pa03.model;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import cs3500.pa03.model.enums.ShipType;
@@ -46,8 +47,7 @@ class CoordTest {
   @Test
   public void testEqualsTrue() {
     Coord otherCoord = new Coord(1, 1);
-    assertEquals(true, coord.equals(otherCoord));
-    assertEquals(true, coord.equals(coord));
+    assertEquals(coord, otherCoord);
   }
 
   /**
@@ -57,17 +57,16 @@ class CoordTest {
   public void testEqualsFalse() {
     Coord otherCoord = new Coord(1, 3);
     Coord otherCoord2 = new Coord(3, 1);
-    assertEquals(false, coord.equals(otherCoord2));
-    assertEquals(false, coord.equals(otherCoord));
+    assertNotEquals(coord, otherCoord2);
+    assertNotEquals(coord, otherCoord);
   }
 
   /**
    * Tests the equals method - exception
    */
   @Test
-  public void testEqualsExeption() {
-    assertThrows(
-        IllegalArgumentException.class,
+  public void testEqualsException() {
+    assertThrows(IllegalArgumentException.class,
         () -> coord.equals(new Ship(ShipType.CARRIER, Direction.HORIZONTAL)));
   }
 

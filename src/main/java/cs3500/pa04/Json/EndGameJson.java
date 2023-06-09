@@ -9,14 +9,23 @@ import cs3500.pa03.model.enums.GameResult;
  * @param result GameResult end: Win, Loss, Draw
  * @param reason the reason why the game ended
  */
-public record EndGameJson(
-    @JsonProperty("result") GameResult result,
-    @JsonProperty("reason") String reason) {
+public record EndGameJson(@JsonProperty("result") GameResult result,
+                          @JsonProperty("reason") String reason) {
 
+  /**
+   * get result
+   *
+   * @return GameResult
+   */
   public GameResult getResult() {
     return this.result;
   }
 
+  /**
+   * get reason
+   *
+   * @return String
+   */
   public String getReason() {
     return this.reason;
   }

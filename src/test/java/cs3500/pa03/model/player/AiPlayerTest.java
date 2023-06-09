@@ -53,7 +53,7 @@ class AiPlayerTest {
 
   /**
    * Tests the succcessfulHits() method
-   *     Was not sure how to test the output since there are no getter methods in
+   * Was not sure how to test the output since there are no getter methods in
    */
   @Test
   public void testSuccessfulHits() {

@@ -94,7 +94,7 @@ public class MockPlayer implements Player {
   }
 
   /**
-   * Mock
+   * Mock successful hits
    *
    * @param shotsThatHitOpponentShips the list of shots that successfully hit the opponent's ships
    */

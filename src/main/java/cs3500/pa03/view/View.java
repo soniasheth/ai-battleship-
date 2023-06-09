@@ -17,15 +17,19 @@ public interface View {
    *
    * @param prompt String, message to display / append
    */
-  void displayAnything(String prompt) ;
+  void displayAnything(String prompt);
 
+  /**
+   * welcome user
+   *
+   * @return dimensions
+   */
   List<Integer> welcome();
 
   /**
    * Gets user's input for the fleet
    *
    * @param size max fleet size
-   *
    * @return String array with the fleet numbers
    */
   Map<ShipType, Integer> getFleet(int size);
@@ -50,7 +54,7 @@ public interface View {
    * @param numShots number of shots they can take
    * @return List of coordinates (shots)
    */
-  List<Coord> getShots(int numShots, int widthMax, int heightMax) ;
+  List<Coord> getShots(int numShots, int widthMax, int heightMax);
 
 
 }

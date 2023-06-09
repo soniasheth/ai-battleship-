@@ -4,9 +4,9 @@ package cs3500.pa03.model.player;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import cs3500.pa03.model.Coord;
+import cs3500.pa03.model.ShotHolder;
 import cs3500.pa03.model.enums.GameResult;
 import cs3500.pa03.model.enums.ShipType;
-import cs3500.pa03.model.ShotHolder;
 import cs3500.pa03.view.BattleSalvoView;
 import cs3500.pa03.view.View;
 import java.io.StringReader;
@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.Random;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 
 /**
  * Tests the ManualPlayer Class
@@ -64,7 +65,7 @@ class ManualPlayerTest {
 
   /**
    * Tests the succcessfulHits() method
-   *     Was not sure how to test the output since there are no getter methods in
+   * Was not sure how to test the output since there are no getter methods in
    */
   @Test
   public void testSuccessfulHits() {
@@ -73,7 +74,6 @@ class ManualPlayerTest {
     player.successfulHits(shots);
 
   }
-
 
 
 }

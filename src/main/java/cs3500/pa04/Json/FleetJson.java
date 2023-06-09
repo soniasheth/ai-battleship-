@@ -8,6 +8,5 @@ import java.util.List;
  *
  * @param fleet the list of ships in for of ship adapter records
  */
-public record FleetJson(
-    @JsonProperty("fleet") List<ShipAdapter> fleet) {
+public record FleetJson(@JsonProperty("fleet") List<ShipAdapter> fleet) {
 }

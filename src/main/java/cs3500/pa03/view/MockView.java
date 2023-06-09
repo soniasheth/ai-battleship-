@@ -25,18 +25,34 @@ public class MockView implements View {
 
   }
 
+  /**
+   * display anything
+   *
+   * @param prompt String, message to display / append
+   */
   @Override
   public void displayAnything(String prompt) {
     build.append("display ");
 
   }
 
+  /**
+   * welcome user
+   *
+   * @return List of Integers
+   */
   @Override
   public List<Integer> welcome() {
     build.append("welcome ");
     return new ArrayList<>(Arrays.asList(6, 6));
   }
 
+  /**
+   * get fleet
+   *
+   * @param size max fleet size
+   * @return Hashmap of fleet
+   */
   @Override
   public Map<ShipType, Integer> getFleet(int size) {
     build.append("getFleet ");
@@ -50,17 +66,34 @@ public class MockView implements View {
     return fleet;
   }
 
-
+  /**
+   * display board
+   *
+   * @param board the gameboard
+   */
   @Override
-  public void displayBoard(Cell[][] board)  {
+  public void displayBoard(Cell[][] board) {
     build.append("displayBoard ");
   }
 
+  /**
+   * display opponent board
+   *
+   * @param board opponent board data
+   */
   @Override
   public void displayOpponentBoard(HitStatus[][] board) {
     build.append("displayOB ");
   }
 
+  /**
+   * get shots
+   *
+   * @param numShots  number of shots they can take
+   * @param widthMax  max width of shots
+   * @param heightMax max height of shots
+   * @return list of coordinates
+   */
   @Override
   public List<Coord> getShots(int numShots, int widthMax, int heightMax) {
     build.append("getShots ");

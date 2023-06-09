@@ -1,7 +1,6 @@
 package cs3500.pa03.controller;
 
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import cs3500.pa03.model.ShotHolder;
@@ -36,13 +35,13 @@ class BattleSalvoControllerTest {
    * Tests the run method in the controller
    */
   @Test
-  public void testRun()  {
+  public void testRun() {
     controller.run();
     assertEquals("welcome getFleet getShots getShots display ", view.build.toString());
-    assertEquals("setup takeshots"
-        + " reportDamage hits takeshots reportDamage hits ", player1.build.toString());
-    assertEquals("setup takeshots reportDamage hits "
-        + "takeshots reportDamage hits ", player2.build.toString());
+    assertEquals("setup takeshots" + " reportDamage hits takeshots reportDamage hits ",
+        player1.build.toString());
+    assertEquals("setup takeshots reportDamage hits " + "takeshots reportDamage hits ",
+        player2.build.toString());
   }
 
 }
