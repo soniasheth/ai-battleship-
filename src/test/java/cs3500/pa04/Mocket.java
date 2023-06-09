@@ -2,13 +2,11 @@ package cs3500.pa04;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.List;
 
 /**
@@ -20,7 +18,7 @@ public class Mocket extends Socket {
 
   /**
    * @param testLog what the server has received from the client
-   * @param toSend what the server will send to the client
+   * @param toSend  what the server will send to the client
    */
   public Mocket(ByteArrayOutputStream testLog, List<String> toSend) {
     this.testLog = testLog;
@@ -34,12 +32,22 @@ public class Mocket extends Socket {
     this.testInputs = new ByteArrayInputStream(stringWriter.toString().getBytes());
   }
 
+  /**
+   * input stream getter
+   *
+   * @return test inputs
+   */
   @Override
   public InputStream getInputStream() {
     return this.testInputs;
 
   }
 
+  /**
+   * output stream getter
+   *
+   * @return test log
+   */
   @Override
   public OutputStream getOutputStream() {
     return this.testLog;

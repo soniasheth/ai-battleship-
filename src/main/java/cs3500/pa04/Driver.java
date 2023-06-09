@@ -24,7 +24,7 @@ public class Driver {
       } catch (IOException e) {
         throw new RuntimeException(e.getMessage());
       }
-    } else if(args.length == 0) {
+    } else if (args.length == 0) {
       //play the game manually
       ManualBattleship battle = new ManualBattleship();
       battle.run();
@@ -42,8 +42,7 @@ public class Driver {
    * @param port the server port
    * @throws IOException if there is a communication issue with the server
    */
-  private static void runClient(String host, int port)
-      throws IOException, IllegalStateException {
+  private static void runClient(String host, int port) throws IOException, IllegalStateException {
     Socket server = new Socket(host, port);
     ProxyController controller = new ProxyController(server, new AiPlayer("AI", new Random()));
     controller.run();

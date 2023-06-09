@@ -118,10 +118,8 @@ class ShipTest {
    * Tests the equals method - exception
    */
   @Test
-  public void testEqualsExeption() {
-    assertThrows(
-        IllegalArgumentException.class,
-        () -> ship.equals(new Cell()));
+  public void testEqualsException() {
+    assertThrows(IllegalArgumentException.class, () -> ship.equals(new Cell()));
   }
 
 }

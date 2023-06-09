@@ -18,7 +18,12 @@ public class Ship {
   private final Direction direction;
 
 
-
+  /**
+   * constructor
+   *
+   * @param type ShipType
+   * @param dir  Direction
+   */
   public Ship(ShipType type, Direction dir) {
     this.type = type;
     this.direction = dir;
@@ -32,7 +37,6 @@ public class Ship {
    *
    * @return false if the ship is not sunk or true is the ship is sunk
    */
-
   public boolean isSunk() {
     // returns true if the ship is sunk
     boolean sunk = true;
@@ -47,7 +51,7 @@ public class Ship {
 
   /**
    * Updates the hitPositionsTracker HashMap and change the boolean corresponding to the given coord
-   *        to true
+   * to true
    */
   public void updateHitPositions(Coord position) {
     //hitPositionsTracker.get(position);
@@ -83,23 +87,42 @@ public class Ship {
     if (!(other instanceof Ship that)) {
       throw new IllegalArgumentException("Not a Ship");
     }
-    return this.hitPositionsTracker.equals(that.hitPositionsTracker)
-       && this.type.equals(that.type);
+    return this.hitPositionsTracker.equals(that.hitPositionsTracker) && this.type.equals(that.type);
   }
 
+  /**
+   * gets hit positions hashmap of ship
+   *
+   * @return HashMap
+   */
   public HashMap<Coord, Boolean> getHitPositionsTracker() {
     return this.hitPositionsTracker;
   }
 
+  /**
+   * gets length of ship
+   *
+   * @return int
+   */
   public int getLength() {
     return hitPositionsTracker.size();
   }
 
+  /**
+   * gets starting coordinate of ship
+   *
+   * @return Coord
+   */
   public Coord getStart() {
     return posns.get(0);
   }
 
+  /**
+   * gets direction of ship
+   *
+   * @return Direction
+   */
   public String getDirection() {
-    return this.direction.getName().toUpperCase();
+    return this.direction.toString().toUpperCase();
   }
 }

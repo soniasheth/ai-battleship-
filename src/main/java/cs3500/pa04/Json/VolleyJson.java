@@ -6,11 +6,16 @@ import java.util.List;
 
 /**
  * Record that represents a volley, a list of coordinates
+ *
  * @param volley list of coordinates
  */
-public record VolleyJson(
-    @JsonProperty("coordinates") List<Coord> volley) {
+public record VolleyJson(@JsonProperty("coordinates") List<Coord> volley) {
 
+  /**
+   * get volley
+   *
+   * @return list of coordinates
+   */
   public List<Coord> getVolley() {
     return this.volley;
   }

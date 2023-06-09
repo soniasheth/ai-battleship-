@@ -23,10 +23,10 @@ public class ManualPlayer extends PlayerAbstract {
   /**
    * Constructor
    *
-   * @param name name
+   * @param name       name
    * @param shotHolder holds the shots
-   * @param view view
-   * @param random random number generator
+   * @param view       view
+   * @param random     random number generator
    */
   public ManualPlayer(String name, ShotHolder shotHolder, View view, Random random) {
     super(name, random);
@@ -38,8 +38,8 @@ public class ManualPlayer extends PlayerAbstract {
    * Given the specifications for a BattleSalvo board, return a list of ships with their locations
    * on the board. Also displays generated board to the user
    *
-   * @param height the height of the board, range: [6, 15] inclusive
-   * @param width the width of the board, range: [6, 15] inclusive
+   * @param height         the height of the board, range: [6, 15] inclusive
+   * @param width          the width of the board, range: [6, 15] inclusive
    * @param specifications a map of ship type to the number of occurrences each ship should
    *                       appear on the board
    * @return the placements of each ship on the board
@@ -49,8 +49,8 @@ public class ManualPlayer extends PlayerAbstract {
     setupHelper(height, width, specifications);
     //need to display starting conditons for the player
 
-      view.displayBoard(board.getGameBoard());
-      view.displayOpponentBoard(opponentTracker);
+    view.displayBoard(board.getGameBoard());
+    view.displayOpponentBoard(opponentTracker);
 
     return board.getShips();
   }
@@ -94,8 +94,8 @@ public class ManualPlayer extends PlayerAbstract {
     }
     // update the boards + display
 
-      view.displayBoard(board.getGameBoard());
-      view.displayOpponentBoard(opponentTracker);
+    view.displayBoard(board.getGameBoard());
+    view.displayOpponentBoard(opponentTracker);
 
   }
 

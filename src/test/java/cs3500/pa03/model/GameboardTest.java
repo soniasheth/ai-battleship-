@@ -1,8 +1,8 @@
 package cs3500.pa03.model;
 
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import cs3500.pa03.model.enums.ShipType;
 import cs3500.pa03.model.enums.Status;
@@ -59,7 +59,7 @@ class GameboardTest {
     //ensure that they are all null to begin with
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
-        assertEquals(null, board1.getGameBoard()[i][j]);
+        assertNull(board1.getGameBoard()[i][j]);
       }
     }
     board1.initBoard(specification1);
@@ -101,7 +101,7 @@ class GameboardTest {
     //ensure that they are all null to begin with
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
-        assertEquals(null, board3.getGameBoard()[i][j]);
+        assertNull(board3.getGameBoard()[i][j]);
       }
     }
     board3.initBoard(specification3);

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-/**git
+/**
  * Represents a BattleSalvoView Object
  */
 public class BattleSalvoView implements View {
@@ -24,7 +24,7 @@ public class BattleSalvoView implements View {
    * Instantiates a BattleSalvoView object
    *
    * @param appendable appendable
-   * @param readable readable
+   * @param readable   readable
    */
   public BattleSalvoView(Appendable appendable, Readable readable) {
     userInput = new Scanner(readable);
@@ -97,29 +97,22 @@ public class BattleSalvoView implements View {
     }
 
     String errormessage = "Uh oh! Invalid fleet numbers \n";
-
     List<Integer> fleetSelectionValues = getNums(errormessage, 4);
 
-
     ShipType[] shipTypes = ShipType.class.getEnumConstants();
-
     for (int i = 0; i < ShipType.values().length; i++) {
       int shipCount = fleetSelectionValues.get(i);
       fleetSelection.put(shipTypes[i], shipCount);
     }
 
     if (!validFleetSelection(fleetSelection, size)) {
-      try {
-        this.append.append(errormessage);
-      } catch (IOException e1) {
-        throw new IllegalArgumentException("not appendable");
-
-      }
+      printMessage(errormessage);
       return getFleet(size);
     }
 
     return fleetSelection;
   }
+
   /**
    * Dispays the player's board to the console
    *
@@ -132,14 +125,14 @@ public class BattleSalvoView implements View {
       append.append("Your Board:\n");
       append.append("--------------------------------------\n");
       for (Cell[] cells : board) {
-        for (int j = 0; j < board[0].length; j++) {
+        for (int i = 0; i < board[0].length; i++) {
           //there is a ship there and it is not hit
-          if (cells[j].getShip() != null && cells[j].getHitStatus()) {
+          if (cells[i].getShip() != null && cells[i].getHitStatus()) {
             append.append("H ");
-          } else if (cells[j].getShip() != null) {
+          } else if (cells[i].getShip() != null) {
             //there is a ship there and it has been hit
             append.append("X ");
-          } else if (cells[j].getHitStatus()) {
+          } else if (cells[i].getHitStatus()) {
             // not ship but it has been hit
             append.append("M ");
           } else {
@@ -152,7 +145,6 @@ public class BattleSalvoView implements View {
     } catch (IOException e) {
       throw new RuntimeException();
     }
-
   }
 
   /**
@@ -194,18 +186,16 @@ public class BattleSalvoView implements View {
    */
   public List<Coord> getShots(int numShots, int widthMax, int heightMax) {
     try {
-
       this.append.append("Please enter ").append(String.valueOf(numShots)).append(" shots \n");
     } catch (IOException e) {
       throw new IllegalArgumentException("not appendable");
     }
 
-
     List<Coord> shots = new ArrayList<>();
     for (int i = 0; i < numShots; i++) {
       String errormessage =
-          "Your shot " + i + " was invalid. Please enter another one. \n" + "Your width max is "
-              + (widthMax - 1) + " and your height max is " + (heightMax - 1) + "\n";
+          "Your shot " + i + " was invalid. Please enter another one. \n" + "Your width max is " +
+              (widthMax - 1) + " and your height max is " + (heightMax - 1) + "\n";
       shots.add(getCoord(widthMax, heightMax, errormessage));
     }
 
@@ -224,11 +214,7 @@ public class BattleSalvoView implements View {
     List<Integer> nums = getNums(errormessage, 2);
 
     while (nums.get(0) > widthMax - 1 || nums.get(1) > heightMax - 1) {
-      try {
-        this.append.append(errormessage);
-      } catch (IOException e) {
-        throw new IllegalArgumentException("not appendable");
-      }
+      printMessage(errormessage);
       nums = getNums(errormessage, 2);
     }
 
@@ -246,7 +232,7 @@ public class BattleSalvoView implements View {
   private boolean validFleetSelection(Map<ShipType, Integer> fleet, int maxSize) {
     int total = 0;
     for (int value : fleet.values()) {
-      if (value == 0) {
+      if (value <= 0) {
         return false;
       }
       total += value;
@@ -269,15 +255,9 @@ public class BattleSalvoView implements View {
 
     //checking to ensure at least two inputs were added
     if (nums.length < amount) {
-      try {
-        this.append.append(errormessage);
-        return getNums(errormessage, amount);
-
-      } catch (IOException e) {
-        throw new IllegalArgumentException("not appendable");
-      }
+      printMessage(errormessage);
+      return getNums(errormessage, amount);
     }
-
 
     //checking to ensure inputs were integers
     try {
@@ -285,24 +265,14 @@ public class BattleSalvoView implements View {
         numbers.add(Integer.parseInt(nums[i]));
       }
     } catch (NumberFormatException e) {
-
-      try {
-        this.append.append(errormessage);
-        return getNums(errormessage, amount);
-      } catch (IOException e1) {
-        throw new IllegalArgumentException("not appendable");
-      }
-
+      printMessage(errormessage);
+      return getNums(errormessage, amount);
     }
 
     //checking to ensure inputs aren't negative
     for (int num : numbers) {
       if (num < 0) {
-        try {
-          this.append.append(errormessage);
-        } catch (IOException e) {
-          throw new IllegalArgumentException("not appendable");
-        }
+        printMessage(errormessage);
         return getNums(errormessage, amount);
       }
     }
@@ -320,5 +290,18 @@ public class BattleSalvoView implements View {
   private boolean inRange(int num1, int num2) {
     //checking to ensure values were within range
     return (num1 >= 6 && num1 <= 15 && num2 >= 6 && num2 <= 15);
+  }
+
+  /**
+   * helper to print error message
+   *
+   * @param errormessage String
+   */
+  private void printMessage(String errormessage) {
+    try {
+      this.append.append(errormessage);
+    } catch (IOException e) {
+      throw new IllegalArgumentException("not appendable");
+    }
   }
 }

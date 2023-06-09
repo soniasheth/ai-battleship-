@@ -33,7 +33,6 @@ import java.util.Map;
 /**
  * Represents a Proxy Controller that receives + processes messages from the server
  */
-
 public class ProxyController implements Controller {
 
   //fields
@@ -47,10 +46,9 @@ public class ProxyController implements Controller {
    * Constructor
    *
    * @param server connection to the server socket
-   * @param ai the ai player
+   * @param ai     the ai player
    * @throws IOException if unable to open server
    */
-
   public ProxyController(Socket server, Player ai) throws IOException {
     this.server = server;
     this.player = ai;
@@ -167,7 +165,7 @@ public class ProxyController implements Controller {
     JsonNode serializeResponse = JsonUtils.serializeRecord(aiShots);
 
     //send message back to the server
-   sendMessageToServer(Message.TAKESHOTS.message(), serializeResponse);
+    sendMessageToServer(Message.TAKESHOTS.message(), serializeResponse);
   }
 
   /**
@@ -232,7 +230,7 @@ public class ProxyController implements Controller {
    * Packages a MessageJson message and send it back to the server
    *
    * @param methodName method name
-   * @param content content being sent back
+   * @param content    content being sent back
    */
   private void sendMessageToServer(String methodName, JsonNode content) {
     //create the message JSON node

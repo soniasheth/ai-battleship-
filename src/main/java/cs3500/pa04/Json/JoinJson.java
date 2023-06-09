@@ -6,11 +6,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * Record JSON that represents a Join message
  *
- * @param gitName github user name
+ * @param gitName  github user name
  * @param gameType MULTI or SINGULAR
  */
-public record JoinJson(
-    @JsonProperty("name") String gitName,
-    @JsonProperty("game-type") String gameType) {
+public record JoinJson(@JsonProperty("name") String gitName,
+                       @JsonProperty("game-type") String gameType) {
 
 }

@@ -26,12 +26,18 @@ import java.util.Random;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * ProxyController test
+ */
 class ProxyControllerTest {
   private ByteArrayOutputStream testLog;
   private ProxyController controller;
 
   private String separation;
 
+  /**
+   * set up
+   */
   @BeforeEach
   public void setup() {
     this.testLog = new ByteArrayOutputStream(2048);
@@ -74,8 +80,8 @@ class ProxyControllerTest {
   @Test
   public void testHandleSetUp() {
     //prepare a sample message
-    FleetSpecJson fleet = new FleetSpecJson(1,1,1,1);
-    SetUpJson setUp = new SetUpJson(10,10, fleet);
+    FleetSpecJson fleet = new FleetSpecJson(1, 1, 1, 1);
+    SetUpJson setUp = new SetUpJson(10, 10, fleet);
     JsonNode serverMessage = createSampleMessage("setup", setUp);
 
     // Create the client with all necessary messages
@@ -99,7 +105,8 @@ class ProxyControllerTest {
   @Test
   public void testHandleTakeShots() {
     //prepare a sample message
-    MessageJson sampleMessage = new MessageJson("take-shots", JsonNodeFactory.instance.objectNode());
+    MessageJson sampleMessage =
+        new MessageJson("take-shots", JsonNodeFactory.instance.objectNode());
     JsonNode serverMessage = JsonUtils.serializeRecord(sampleMessage);
 
     // Create the client with all necessary messages
@@ -147,7 +154,8 @@ class ProxyControllerTest {
   @Test
   public void testHandleSuccHits() {
     //prepare a sample message
-    MessageJson sampleMessage = new MessageJson("successful-hits", JsonNodeFactory.instance.objectNode());
+    MessageJson sampleMessage =
+        new MessageJson("successful-hits", JsonNodeFactory.instance.objectNode());
     JsonNode serverMessage = JsonUtils.serializeRecord(sampleMessage);
 
     // Create the client with all necessary messages
@@ -191,6 +199,7 @@ class ProxyControllerTest {
 
   /**
    * Converts the ByteArrayOutputStream log to a string in UTF_8 format
+   *
    * @return String representing the current log buffer
    */
   private String logToString() {
@@ -219,12 +228,13 @@ class ProxyControllerTest {
   /**
    * Create a MessageJson for some name and arguments.
    *
-   * @param messageName name of the type of message; "hint" or "win"
+   * @param messageName   name of the type of message; "hint" or "win"
    * @param messageObject object to embed in a message json
    * @return a MessageJson for the object
    */
   private JsonNode createSampleMessage(String messageName, Record messageObject) {
-    MessageJson messageJson = new MessageJson(messageName, JsonUtils.serializeRecord(messageObject));
+    MessageJson messageJson =
+        new MessageJson(messageName, JsonUtils.serializeRecord(messageObject));
     return JsonUtils.serializeRecord(messageJson);
   }
 
