@@ -3,11 +3,10 @@ package cs3500.pa03.model.player;
 import cs3500.pa03.model.Coord;
 import cs3500.pa03.model.enums.GameResult;
 import cs3500.pa03.model.enums.HitStatus;
-import cs3500.pa03.model.Ship;
 import cs3500.pa03.model.enums.ShipType;
+import cs3500.pa03.model.Ship;
 import cs3500.pa03.model.ShotHolder;
 import cs3500.pa03.view.View;
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -110,7 +109,6 @@ public class ManualPlayer extends PlayerAbstract {
    */
   @Override
   public void endGame(GameResult result, String reason) {
-    return;
   }
 
 

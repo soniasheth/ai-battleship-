@@ -9,8 +9,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class Coord {
   //fields
-  private int coordX;
-  private int coordY;
+  private final int coordX;
+  private final int coordY;
 
   /**
    * Constructor - Constructs a Coord Object

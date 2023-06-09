@@ -6,7 +6,6 @@ import cs3500.pa03.model.player.ManualPlayer;
 import cs3500.pa03.model.player.Player;
 import cs3500.pa03.view.BattleSalvoView;
 import cs3500.pa03.view.View;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.Random;
@@ -21,8 +20,7 @@ public class ManualBattleship {
    */
   public void run() {
     //create view
-    View view = new BattleSalvoView(new PrintStream(System.out),
-        new InputStreamReader(System.in));
+    View view = new BattleSalvoView(new PrintStream(System.out), new InputStreamReader(System.in));
     ShotHolder shotHolder = new ShotHolder();
     //create players
     Player player1 = new ManualPlayer("manual", shotHolder, view, new Random());

@@ -31,6 +31,11 @@ public class MockPlayer implements Player {
 
   }
 
+  /**
+   * name method mock
+   *
+   * @return String
+   */
   @Override
   public String name() {
     build.append("name ");
@@ -40,8 +45,8 @@ public class MockPlayer implements Player {
   /**
    * Mock set up
    *
-   * @param height the height of the board, range: [6, 15] inclusive
-   * @param width the width of the board, range: [6, 15] inclusive
+   * @param height         the height of the board, range: [6, 15] inclusive
+   * @param width          the width of the board, range: [6, 15] inclusive
    * @param specifications a map of ship type to the number of occurrences each ship should
    *                       appear on the board
    * @return list of ships
@@ -67,7 +72,7 @@ public class MockPlayer implements Player {
   public List<Coord> takeShots() {
     build.append("takeshots ");
     List<Coord> listValid = new ArrayList<>(
-        Arrays.asList(new Coord(0, 0),new Coord(1, 1),new Coord(2, 2),new Coord(3, 3) ));
+        Arrays.asList(new Coord(0, 0), new Coord(1, 1), new Coord(2, 2), new Coord(3, 3)));
     if (!calledShots) {
       calledShots = true;
       return listValid;

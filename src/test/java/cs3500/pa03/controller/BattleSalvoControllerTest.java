@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import cs3500.pa03.model.ShotHolder;
 import cs3500.pa03.model.player.MockPlayer;
 import cs3500.pa03.view.MockView;
-import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
