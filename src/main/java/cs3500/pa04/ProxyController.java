@@ -86,16 +86,21 @@ public class ProxyController implements Controller {
     String name = message.methodName();
     JsonNode arguments = message.arguments();
 
-    switch (name) {
-      case "join" -> handleJoin();
-      case "setup" -> handleSetUp(arguments);
-      case "take-shots" -> handleTakeShots();
-      case "report-damage" -> handleReportDamage(arguments);
-      case "successful-hits" -> handleSuccessfulHits(arguments);
-      case "end-game" -> handleEndGame(arguments);
-      default -> throw new IllegalStateException("Invalid message name");
+    if (name.equals(Message.JOIN.message())) {
+      handleJoin();
+    } else if (name.equals(Message.SETUP.message())) {
+      handleSetUp(arguments);
+    } else if (name.equals(Message.TAKESHOTS.message())) {
+      handleTakeShots();
+    } else if (name.equals(Message.REPORTDAMAGE.message())) {
+      handleReportDamage(arguments);
+    } else if (name.equals(Message.SUCCESSFULHITS.message())) {
+      handleSuccessfulHits(arguments);
+    } else if (name.equals(Message.ENDGAME.message())) {
+      handleEndGame(arguments);
+    } else {
+      throw new IllegalStateException("Invalid message name");
     }
-
   }
 
   /**
@@ -224,6 +229,13 @@ public class ProxyController implements Controller {
     JsonNode emptyContent = JsonNodeFactory.instance.objectNode();
     sendMessageToServer(Message.ENDGAME.message(), emptyContent);
     System.out.println(endGameMessage.getReason());
+
+    //attempt to close the socket
+    try {
+      server.close();
+    } catch(IOException e) {
+      //do nothing
+    }
   }
 
   /**
