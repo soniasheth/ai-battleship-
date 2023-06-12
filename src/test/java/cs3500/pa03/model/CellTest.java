@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import cs3500.pa03.model.enums.ShipType;
 import cs3500.pa03.model.enums.Status;
-import cs3500.pa04.Enums.Direction;
+import cs3500.pa04.enums.Direction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

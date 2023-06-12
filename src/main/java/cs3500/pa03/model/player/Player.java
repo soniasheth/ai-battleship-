@@ -1,11 +1,14 @@
 package cs3500.pa03.model.player;
 
 import cs3500.pa03.model.Coord;
-import cs3500.pa03.model.enums.GameResult;
 import cs3500.pa03.model.Ship;
+import cs3500.pa03.model.enums.GameResult;
 import cs3500.pa03.model.enums.ShipType;
 import java.util.List;
 import java.util.Map;
+
+
+
 
 /**
  * Represents a Player

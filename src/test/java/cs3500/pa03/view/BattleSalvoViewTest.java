@@ -8,7 +8,7 @@ import cs3500.pa03.model.Cell;
 import cs3500.pa03.model.Ship;
 import cs3500.pa03.model.enums.HitStatus;
 import cs3500.pa03.model.enums.ShipType;
-import cs3500.pa04.Enums.Direction;
+import cs3500.pa04.enums.Direction;
 import java.io.StringReader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

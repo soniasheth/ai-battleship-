@@ -2,16 +2,18 @@ package cs3500.pa03.model.player;
 
 import cs3500.pa03.model.Cell;
 import cs3500.pa03.model.Coord;
-import cs3500.pa03.model.enums.GameResult;
 import cs3500.pa03.model.Gameboard;
-import cs3500.pa03.model.enums.HitStatus;
 import cs3500.pa03.model.Ship;
+import cs3500.pa03.model.enums.GameResult;
+import cs3500.pa03.model.enums.HitStatus;
 import cs3500.pa03.model.enums.ShipType;
 import cs3500.pa03.model.enums.Status;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
+
 
 /**
  * Abstract Class for a player

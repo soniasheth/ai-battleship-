@@ -194,8 +194,8 @@ public class BattleSalvoView implements View {
     List<Coord> shots = new ArrayList<>();
     for (int i = 0; i < numShots; i++) {
       String errormessage =
-          "Your shot " + i + " was invalid. Please enter another one. \n" + "Your width max is " +
-              (widthMax - 1) + " and your height max is " + (heightMax - 1) + "\n";
+          "Your shot " + i + " was invalid. Please enter another one. \n" + "Your width max is "
+              + (widthMax - 1) + " and your height max is " + (heightMax - 1) + "\n";
       shots.add(getCoord(widthMax, heightMax, errormessage));
     }
 

@@ -1,14 +1,14 @@
 package cs3500.pa03.model.player;
 
 import cs3500.pa03.model.Coord;
+import cs3500.pa03.model.Ship;
 import cs3500.pa03.model.enums.GameResult;
 import cs3500.pa03.model.enums.HitStatus;
-import cs3500.pa03.model.Ship;
-import java.sql.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+
+
 
 /**
  * Represents a Computer Player - AI
@@ -32,32 +32,13 @@ public class AiPlayer extends PlayerAbstract {
    */
   @Override
   public List<Coord> takeShots() {
-
+    List<Coord> shots = new ArrayList<>();
     int shotNum = getNumShots();
 
     if (shotNum > shotsLeft) {
       shotNum = shotsLeft;
     }
-
-    List<Coord> shots = randomShooting(shotNum, new ArrayList<>());
-
-    for(Coord shot: shots) {
-      opponentTracker[shot.getY()][shot.getX()] = HitStatus.MISS;
-      shotsLeft --;
-    }
-
-    return shots;
-  }
-
-
-  /**
-   * randomized shooting
-   * @param shotNum amount of shots
-   * @param soFar accumulator of the shots so far
-   * @return list of coordinates to shoot at
-   */
-  private List<Coord> randomShooting(int shotNum, List<Coord> soFar) {
-    List<Coord> shots = new ArrayList<>(soFar);
+    //Random random = new Random();
     for (int i = 0; i < shotNum; i++) {
       boolean goodHit = false;
 
@@ -67,24 +48,27 @@ public class AiPlayer extends PlayerAbstract {
         int x = random.nextInt(board.getGameBoard().length); //row
         int y = random.nextInt(board.getGameBoard()[i].length); //column
         //the ai has not hit the spot yet
-        if (opponentTracker[x][y].equals(HitStatus.NONE)) {
+        if (opponentTracker[x ][y].equals(HitStatus.NONE)) {
           //update all the metadata with the hit shot
           goodHit = true;
           shots.add(new Coord(y, x));
+
+          shotsLeft--;
+
+          opponentTracker[x][y] = HitStatus.MISS;
         }
       }
-
     }
     return shots;
   }
 
 
-    /**
-     * Reports to this AI player what shots in their previous volley returned from takeShots()
-     * successfully hit the opponent's ship. Updates the opponent tracker board accordinly
-     *
-     * @param shotsThatHitOpponentShips the list of shots that successfully hit the opponent's ships
-     */
+  /**
+   * Reports to this AI player what shots in their previous volley returned from takeShots()
+   * successfully hit the opponent's ship. Updates the opponent tracker board accordinly
+   *
+   * @param shotsThatHitOpponentShips the list of shots that successfully hit the opponent's ships
+   */
   @Override
   public void successfulHits(List<Coord> shotsThatHitOpponentShips) {
     //update the 2d array that tracks the opponent

@@ -9,7 +9,7 @@ import cs3500.pa03.model.ShotHolder;
 import cs3500.pa03.model.enums.ShipType;
 import cs3500.pa03.view.BattleSalvoView;
 import cs3500.pa03.view.View;
-import cs3500.pa04.Enums.Direction;
+import cs3500.pa04.enums.Direction;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;

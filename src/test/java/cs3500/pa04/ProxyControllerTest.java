@@ -11,12 +11,12 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import cs3500.pa03.model.enums.GameResult;
 import cs3500.pa03.model.player.AiPlayer;
 import cs3500.pa03.model.player.MockPlayer;
-import cs3500.pa04.Json.EndGameJson;
-import cs3500.pa04.Json.FleetSpecJson;
-import cs3500.pa04.Json.JsonUtils;
-import cs3500.pa04.Json.MessageJson;
-import cs3500.pa04.Json.SetUpJson;
-import cs3500.pa04.Json.VolleyJson;
+import cs3500.pa04.json.EndGameJson;
+import cs3500.pa04.json.FleetSpecJson;
+import cs3500.pa04.json.JsonUtils;
+import cs3500.pa04.json.MessageJson;
+import cs3500.pa04.json.SetUpJson;
+import cs3500.pa04.json.VolleyJson;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -82,11 +82,11 @@ class ProxyControllerTest {
   @Test
   public void testHandleSetUp() {
     //prepare a sample message
-    FleetSpecJson fleet = new FleetSpecJson(1,0,0,0);
+    FleetSpecJson fleet = new FleetSpecJson(1, 0, 0, 0);
     SetUpJson setUp = new SetUpJson(10, 10, fleet);
 
     //fleet with one ship for testing purposes
-  
+
     JsonNode serverMessage = createSampleMessage("setup", setUp);
 
     // Create the client with all necessary messages
@@ -129,8 +129,9 @@ class ProxyControllerTest {
 
     // run the controller and verify the response
     this.controller.run();
-    String expected = "{\"method-name\":\"take-shots\",\"arguments\":{\"coordinates\":[{\"x\":0,\"y"
-        + "\":0},{\"x\":1,\"y\":1},{\"x\":2,\"y\":2},{\"x\":3,\"y\":3}]}}" + separation;
+    String expected =
+        "{\"method-name\":\"take-shots\",\"arguments\":{\"coordinates\":[{\"x\":0,\"y"
+            + "\":0},{\"x\":1,\"y\":1},{\"x\":2,\"y\":2},{\"x\":3,\"y\":3}]}}" + separation;
     assertEquals(expected, logToString());
     responseToClass(MessageJson.class);
   }

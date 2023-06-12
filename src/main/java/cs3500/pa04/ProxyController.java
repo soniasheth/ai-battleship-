@@ -9,17 +9,17 @@ import cs3500.pa03.model.Coord;
 import cs3500.pa03.model.Ship;
 import cs3500.pa03.model.enums.ShipType;
 import cs3500.pa03.model.player.Player;
-import cs3500.pa04.Enums.GameType;
-import cs3500.pa04.Enums.Message;
-import cs3500.pa04.Json.EndGameJson;
-import cs3500.pa04.Json.FleetJson;
-import cs3500.pa04.Json.FleetSpecJson;
-import cs3500.pa04.Json.JoinJson;
-import cs3500.pa04.Json.JsonUtils;
-import cs3500.pa04.Json.MessageJson;
-import cs3500.pa04.Json.SetUpJson;
-import cs3500.pa04.Json.ShipAdapter;
-import cs3500.pa04.Json.VolleyJson;
+import cs3500.pa04.enums.GameType;
+import cs3500.pa04.enums.Message;
+import cs3500.pa04.json.EndGameJson;
+import cs3500.pa04.json.FleetJson;
+import cs3500.pa04.json.FleetSpecJson;
+import cs3500.pa04.json.JoinJson;
+import cs3500.pa04.json.JsonUtils;
+import cs3500.pa04.json.MessageJson;
+import cs3500.pa04.json.SetUpJson;
+import cs3500.pa04.json.ShipAdapter;
+import cs3500.pa04.json.VolleyJson;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -233,7 +233,7 @@ public class ProxyController implements Controller {
     //attempt to close the socket
     try {
       server.close();
-    } catch(IOException e) {
+    } catch (IOException e) {
       //do nothing
     }
   }
